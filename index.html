@@ -811,7 +811,7 @@ setTimeout(() => {
   countUp(document.getElementById('s2'), 40, 1400);
   countUp(document.getElementById('s3'), 100, 1600);
   countUp(document.getElementById('s4'), 4, 800);
-}, 2200);
+}, 7200);
 
 /* ── CLOCK + UPTIME ── */
 let uptimeSec = 0;
@@ -835,25 +835,25 @@ function scrollTo(id) {
 /* ── BOOT SEQUENCE ── */
 const bootLines = [
   { text:'ParthOS BIOS v2.7 — Copyright 2027 Parth Jain', cls:'white', delay:0 },
-  { text:'CPU: 8-core Python/JS/TS runtime  |  RAM: 24+ projects loaded', cls:'', delay:150 },
-  { text:'Storage: 3 years of commits detected', cls:'', delay:300 },
-  { text:'', cls:'', delay:380 },
-  { text:'Detecting dual-degree configuration...', cls:'', delay:430 },
-  { text:'  [OK] VIT Bhopal — B.Tech CSE  (CGPA 8.44)', cls:'green', delay:580 },
-  { text:'  [OK] IIT Madras — B.S. Data Science  (CGPA 8.20)', cls:'green', delay:720 },
-  { text:'', cls:'', delay:800 },
-  { text:'Loading skill modules...', cls:'', delay:850 },
-  { text:'  Flask ........... [OK]   Vue.js ........... [OK]', cls:'green', delay:950 },
-  { text:'  TensorFlow ....... [OK]   Next.js .......... [OK]', cls:'green', delay:1020 },
-  { text:'  JWT/RBAC ......... [OK]   Celery/Redis ..... [OK]', cls:'green', delay:1090 },
-  { text:'  scikit-learn ..... [OK]   Flutter .......... [OK]', cls:'green', delay:1160 },
-  { text:'', cls:'', delay:1220 },
-  { text:'Mounting project filesystem (24 repos)...', cls:'cyan', delay:1270 },
-  { text:'', cls:'', delay:1350 },
-  { text:'██████████████████████████████ 100%', cls:'green', delay:1400 },
-  { text:'', cls:'', delay:1500 },
-  { text:'▲ PARTH OS — READY', cls:'big', delay:1550 },
-  { text:'Type  help  in the terminal below to explore', cls:'cyan', delay:1700 },
+  { text:'CPU: 8-core Python/JS/TS runtime  |  RAM: 24+ projects loaded', cls:'', delay:400 },
+  { text:'Storage: 3 years of commits detected', cls:'', delay:800 },
+  { text:'', cls:'', delay:1000 },
+  { text:'Detecting dual-degree configuration...', cls:'', delay:1150 },
+  { text:'  [OK] VIT Bhopal — B.Tech CSE  (CGPA 8.44)', cls:'green', delay:1550 },
+  { text:'  [OK] IIT Madras — B.S. Data Science  (CGPA 8.20)', cls:'green', delay:1950 },
+  { text:'', cls:'', delay:2200 },
+  { text:'Loading skill modules...', cls:'', delay:2400 },
+  { text:'  Flask ........... [OK]   Vue.js ........... [OK]', cls:'green', delay:2700 },
+  { text:'  TensorFlow ....... [OK]   Next.js .......... [OK]', cls:'green', delay:2950 },
+  { text:'  JWT/RBAC ......... [OK]   Celery/Redis ..... [OK]', cls:'green', delay:3200 },
+  { text:'  scikit-learn ..... [OK]   Flutter .......... [OK]', cls:'green', delay:3450 },
+  { text:'', cls:'', delay:3700 },
+  { text:'Mounting project filesystem (24 repos)...', cls:'cyan', delay:3900 },
+  { text:'', cls:'', delay:4200 },
+  { text:'██████████████████████████████ 100%', cls:'green', delay:4500 },
+  { text:'', cls:'', delay:4900 },
+  { text:'▲ PARTH OS — READY', cls:'big', delay:5200 },
+  { text:'Type  help  in the terminal below to explore', cls:'cyan', delay:5700 },
 ];
 const bootEl = document.getElementById('boot-lines');
 bootLines.forEach(l => {
@@ -869,7 +869,7 @@ setTimeout(() => {
   const boot = document.getElementById('boot');
   boot.classList.add('hidden');
   setTimeout(() => { boot.style.display='none'; }, 700);
-}, 2300);
+}, 6500);
 
 /* ── INTERACTIVE TERMINAL ── */
 const output = document.getElementById('term-output');
@@ -1032,7 +1032,7 @@ setTimeout(() => {
   [{t:'Welcome to ParthOS v2027', c:'green'},{t:'Type  help  to see available commands', c:'muted'},{t:'', c:''}]
     .forEach(l => { const d = document.createElement('div'); d.className='output-line '+l.c; d.textContent=l.t||' '; output.appendChild(d); });
   input.focus();
-}, 2500);
+}, 7500);
 
 document.getElementById('live-terminal').addEventListener('click', () => input.focus());
 </script>
