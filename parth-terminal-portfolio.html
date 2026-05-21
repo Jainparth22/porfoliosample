@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parth Jain — Terminal OS</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --green: #39d353;
+    --green-dim: #1d9e75;
+    --green-dark: #0a3d20;
+    --cyan: #79c0ff;
+    --yellow: #e3b341;
+    --red: #f85149;
+    --white: #e6edf3;
+    --muted: #7d8590;
+    --border: #30363d;
+    --prompt: #39d353;
+    --cursor-color: #39d353;
+    --font: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.6;
+    cursor: default;
+    overflow-x: hidden;
+  }
+
+  /* ── SCANLINE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── BOOT SCREEN ── */
+  #boot {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+    transition: opacity 0.6s ease;
+  }
+  #boot.hidden { opacity: 0; pointer-events: none; }
+  .boot-line {
+    color: var(--muted);
+    margin-bottom: 2px;
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: bootIn 0.1s ease forwards;
+    font-size: 13px;
+  }
+  .boot-line.green { color: var(--green); }
+  .boot-line.cyan  { color: var(--cyan); }
+  .boot-line.yellow{ color: var(--yellow); }
+  .boot-line.white { color: var(--white); font-weight: 500; }
+  .boot-line.big   { font-size: 22px; color: var(--green); font-weight: 700; letter-spacing: 2px; margin: 16px 0 8px; }
+  @keyframes bootIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .boot-bar-wrap { margin: 12px 0; height: 6px; background: var(--bg3); border-radius: 3px; width: 340px; }
+  .boot-bar { height: 100%; background: var(--green); border-radius: 3px; width: 0; transition: width 2s ease; }
+
+  /* ── TOPBAR / MENUBAR ── */
+  #topbar {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-size: 12px;
+  }
+  #topbar-left { display: flex; align-items: center; gap: 16px; }
+  .os-logo { color: var(--green); font-weight: 700; font-size: 13px; letter-spacing: 1px; }
+  .topbar-cmd {
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .topbar-cmd:hover { background: var(--bg3); color: var(--white); }
+  #topbar-right { display: flex; align-items: center; gap: 16px; color: var(--muted); }
+  #clock { color: var(--green); font-size: 12px; }
+  .battery { display: flex; align-items: center; gap: 4px; }
+
+  /* ── MAIN LAYOUT ── */
+  #desktop {
+    min-height: calc(100vh - 36px);
+    padding: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header .sh-symbol { color: var(--green); font-weight: 700; font-size: 16px; }
+  .section-header .sh-title  { color: var(--white); font-size: 15px; font-weight: 500; }
+  .section-header .sh-sub    { color: var(--muted); font-size: 12px; }
+
+  /* ── HERO / ABOUT ── */
+  #section-hero { margin-bottom: 40px; }
+  .hero-ascii {
+    color: var(--green);
+    font-size: 11px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    white-space: pre;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 1.2s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 1.5s forwards;
+  }
+  .info-block { margin-bottom: 16px; }
+  .info-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .info-value { color: var(--white); }
+  .info-value a { color: var(--cyan); text-decoration: none; }
+  .info-value a:hover { text-decoration: underline; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background: var(--green-dark);
+    color: var(--green);
+    border: 1px solid var(--green-dim);
+  }
+  .tag.blue   { background: #0d2137; color: var(--cyan); border-color: #1a4a6e; }
+  .tag.yellow { background: #2d1f00; color: var(--yellow); border-color: #6b4a00; }
+
+  /* ── TERMINAL WINDOW ── */
+  .term-window {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .term-titlebar {
+    background: var(--bg3);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .term-dots { display: flex; gap: 6px; }
+  .term-dot  { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red    { background: #f85149; }
+  .dot-yellow { background: #e3b341; }
+  .dot-green  { background: #39d353; }
+  .term-title { color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .term-body  { padding: 16px 20px; }
+
+  /* ── COMMAND PROMPT LINE ── */
+  .prompt-line { display: flex; align-items: flex-start; gap: 0; margin-bottom: 4px; flex-wrap: wrap; }
+  .p-user   { color: var(--green); }
+  .p-at     { color: var(--muted); }
+  .p-host   { color: var(--cyan); }
+  .p-colon  { color: var(--muted); }
+  .p-path   { color: var(--yellow); }
+  .p-dollar { color: var(--white); margin: 0 6px; }
+  .p-cmd    { color: var(--white); }
+  .p-arg    { color: var(--cyan); margin-left: 6px; }
+  .p-flag   { color: var(--yellow); margin-left: 6px; }
+
+  .output-line { color: var(--muted); margin-bottom: 2px; padding-left: 0; font-size: 13px; }
+  .output-line.green  { color: var(--green); }
+  .output-line.cyan   { color: var(--cyan); }
+  .output-line.yellow { color: var(--yellow); }
+  .output-line.white  { color: var(--white); }
+  .output-line.red    { color: var(--red); }
+  .blank { height: 8px; }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .proj-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .proj-card:hover { border-color: var(--green-dim); background: #0d1f17; }
+  .proj-card.featured { border-color: var(--green-dim); }
+  .proj-title {
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .proj-star { color: var(--yellow); font-size: 11px; }
+  .proj-desc { color: var(--muted); font-size: 12px; line-height: 1.6; margin-bottom: 10px; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: 4px; }
+  .proj-tech {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--bg3);
+    color: var(--cyan);
+    border: 1px solid var(--border);
+  }
+  .proj-metric {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--green);
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+
+  /* ── SKILLS SECTION ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .skill-cat {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .skill-cat-name {
+    color: var(--yellow);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .skill-cat-name::before {
+    content: '##';
+    color: var(--muted);
+    font-size: 10px;
+  }
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--white);
+  }
+  .skill-bar-wrap { flex: 1; height: 3px; background: var(--bg3); border-radius: 2px; }
+  .skill-bar { height: 100%; background: var(--green); border-radius: 2px; }
+
+  /* ── INTERACTIVE TERMINAL ── */
+  #live-terminal {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  #live-titlebar {
+    background: var(--bg3);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  #term-output {
+    padding: 16px 20px;
+    min-height: 200px;
+    max-height: 380px;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  #term-input-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 14px;
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+  #term-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--white);
+    font-family: var(--font);
+    font-size: 13px;
+    flex: 1;
+    caret-color: var(--green);
+  }
+  .cursor-blink {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--green);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+    margin-left: 1px;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; margin-top: 12px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.4s ease forwards;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--bg);
+  }
+  .tl-date  { color: var(--muted); font-size: 11px; margin-bottom: 2px; }
+  .tl-title { color: var(--green); font-size: 13px; font-weight: 500; }
+  .tl-sub   { color: var(--white); font-size: 12px; }
+  .tl-desc  { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  /* ── CERTS ── */
+  .cert-list { margin-top: 12px; }
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .cert-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: var(--bg3);
+    color: var(--yellow);
+    border: 1px solid #6b4a00;
+    white-space: nowrap;
+  }
+  .cert-name { color: var(--white); flex: 1; }
+  .cert-issuer { color: var(--muted); }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .stat-num { color: var(--green); font-size: 24px; font-weight: 700; line-height: 1; }
+  .stat-label { color: var(--muted); font-size: 11px; margin-top: 4px; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .contact-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: var(--green-dim); }
+  .contact-icon { color: var(--green); font-size: 16px; width: 20px; text-align: center; }
+  .contact-label { color: var(--muted); font-size: 11px; }
+  .contact-val   { color: var(--white); }
+
+  /* ── FILTER ROW ── */
+  .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .filter-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--muted); color: var(--white); }
+  .filter-btn.active { background: var(--green-dark); border-color: var(--green-dim); color: var(--green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 650px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .stat-row  { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    #desktop { padding: 16px; }
+    .hero-ascii { font-size: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BOOT SCREEN -->
+<div id="boot">
+  <div id="boot-lines"></div>
+</div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div id="topbar-left">
+    <span class="os-logo">▲ ParthOS v2027</span>
+    <span class="topbar-cmd" onclick="scrollTo('hero')">~/home</span>
+    <span class="topbar-cmd" onclick="scrollTo('projects')">~/projects</span>
+    <span class="topbar-cmd" onclick="scrollTo('skills')">~/skills</span>
+    <span class="topbar-cmd" onclick="scrollTo('journey')">~/journey</span>
+    <span class="topbar-cmd" onclick="scrollTo('contact')">~/contact</span>
+  </div>
+  <div id="topbar-right">
+    <span>uptime: <span id="uptime" style="color:var(--green)">0s</span></span>
+    <span id="clock">00:00:00</span>
+  </div>
+</div>
+
+<!-- MAIN DESKTOP -->
+<div id="desktop">
+
+  <!-- ── HERO ── -->
+  <section id="hero" style="margin-bottom:40px">
+    <pre class="hero-ascii">
+██████╗  █████╗ ██████╗ ████████╗██╗  ██╗
+██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██║  ██║
+██████╔╝███████║██████╔╝   ██║   ███████║
+██╔═══╝ ██╔══██║██╔══██╗   ██║   ██╔══██║
+██║     ██║  ██║██║  ██║   ██║   ██║  ██║
+╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝  <span style="color:#7d8590">JAIN</span>
+    </pre>
+    <div class="hero-grid">
+      <div>
+        <div class="info-block">
+          <div class="info-label">$ whoami</div>
+          <div class="info-value" style="font-size:16px;font-weight:500;color:var(--green)">Parth Jain</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">$ cat role.txt</div>
+          <div class="info-value">Full-Stack Engineer · AI/ML Practitioner · Data Science Student</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">$ cat education.txt</div>
+          <div class="info-value" style="color:var(--cyan)">B.Tech CSE @ VIT Bhopal (CGPA 8.44)</div>
+          <div class="info-value" style="color:var(--cyan)">B.S. Data Science @ IIT Madras (CGPA 8.20)</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">$ cat location.txt</div>
+          <div class="info-value">Bhopal, Madhya Pradesh, India</div>
+        </div>
+      </div>
+      <div>
+        <div class="info-block">
+          <div class="info-label">$ ls ./stack/</div>
+          <div class="tag-row">
+            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">FastAPI</span>
+            <span class="tag blue">Vue.js</span><span class="tag blue">React</span><span class="tag blue">Next.js</span>
+            <span class="tag yellow">TensorFlow</span><span class="tag yellow">PyTorch</span><span class="tag yellow">scikit-learn</span>
+            <span class="tag">TypeScript</span><span class="tag">Flutter</span><span class="tag blue">Docker</span>
+          </div>
+        </div>
+        <div class="info-block" style="margin-top:16px">
+          <div class="info-label">$ cat contact.json</div>
+          <div class="info-value" style="font-size:12px;line-height:1.9">
+            <span style="color:var(--muted)">{</span><br>
+            &nbsp;&nbsp;<span style="color:var(--yellow)">"email"</span>: <span style="color:var(--green)">"parthjain0722@gmail.com"</span>,<br>
+            &nbsp;&nbsp;<span style="color:var(--yellow)">"github"</span>: <span style="color:var(--cyan)">"<a href="https://github.com/jainparth22" target="_blank">github.com/jainparth22</a>"</span>,<br>
+            &nbsp;&nbsp;<span style="color:var(--yellow)">"linkedin"</span>: <span style="color:var(--cyan)">"<a href="https://linkedin.com/in/jainparth22" target="_blank">jainparth22</a>"</span><br>
+            <span style="color:var(--muted)">}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STAT COUNTERS ── -->
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num" id="s1">0</div><div class="stat-label">projects built</div></div>
+    <div class="stat-card"><div class="stat-num" id="s2">0</div><div class="stat-label">REST APIs designed</div></div>
+    <div class="stat-card"><div class="stat-num" id="s3">0</div><div class="stat-label">DSA problems</div></div>
+    <div class="stat-card"><div class="stat-num" id="s4">0</div><div class="stat-label">certifications</div></div>
+  </div>
+
+  <!-- ── LIVE INTERACTIVE TERMINAL ── -->
+  <div id="live-terminal" style="margin-bottom:28px">
+    <div id="live-titlebar">
+      <div class="term-dots">
+        <div class="term-dot dot-red"></div>
+        <div class="term-dot dot-yellow"></div>
+        <div class="term-dot dot-green"></div>
+      </div>
+      <span style="color:var(--muted);font-size:12px;margin-left:6px">parth@portfolio — bash</span>
+      <span style="color:var(--muted);font-size:11px;margin-left:auto">try: help · ls · cat about · run ppav2</span>
+    </div>
+    <div id="term-output"></div>
+    <div id="term-input-row">
+      <span class="p-user">parth</span><span class="p-at">@</span><span class="p-host">portfolio</span><span class="p-colon">:</span><span class="p-path" id="cur-path">~/home</span><span class="p-dollar">$</span>
+      <input id="term-input" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="type a command...">
+      <span class="cursor-blink"></span>
+    </div>
+  </div>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects" style="margin-bottom:40px">
+    <div class="section-header">
+      <span class="sh-symbol">$</span>
+      <span class="sh-title">ls -la ~/projects/</span>
+      <span class="sh-sub">— 24 repositories</span>
+    </div>
+    <div class="filter-row" id="filter-row">
+      <button class="filter-btn active" data-filter="all">all</button>
+      <button class="filter-btn" data-filter="flask">flask</button>
+      <button class="filter-btn" data-filter="ml">ml/ai</button>
+      <button class="filter-btn" data-filter="vue">vue.js</button>
+      <button class="filter-btn" data-filter="react">react</button>
+      <button class="filter-btn" data-filter="flutter">flutter</button>
+      <button class="filter-btn" data-filter="hackathon">hackathon</button>
+    </div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" style="margin-bottom:40px">
+    <div class="section-header">
+      <span class="sh-symbol">$</span>
+      <span class="sh-title">cat ~/skills/index.json</span>
+      <span class="sh-sub">— proficiency map</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <div class="skill-cat-name">backend</div>
+        <div class="skill-item"><span style="min-width:80px">Flask</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div><span style="color:var(--muted);font-size:11px">92%</span></div>
+        <div class="skill-item"><span style="min-width:80px">FastAPI</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div><span style="color:var(--muted);font-size:11px">80%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Node/Express</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div><span style="color:var(--muted);font-size:11px">65%</span></div>
+        <div class="skill-item"><span style="min-width:80px">REST APIs</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div><span style="color:var(--muted);font-size:11px">90%</span></div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-name">frontend</div>
+        <div class="skill-item"><span style="min-width:80px">Vue.js 3</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span style="color:var(--muted);font-size:11px">85%</span></div>
+        <div class="skill-item"><span style="min-width:80px">React 19</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div><span style="color:var(--muted);font-size:11px">78%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Next.js</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div><span style="color:var(--muted);font-size:11px">72%</span></div>
+        <div class="skill-item"><span style="min-width:80px">TailwindCSS</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div><span style="color:var(--muted);font-size:11px">80%</span></div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-name">ml / ai</div>
+        <div class="skill-item"><span style="min-width:80px">scikit-learn</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span style="color:var(--muted);font-size:11px">85%</span></div>
+        <div class="skill-item"><span style="min-width:80px">TensorFlow</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div><span style="color:var(--muted);font-size:11px">75%</span></div>
+        <div class="skill-item"><span style="min-width:80px">HuggingFace</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div><span style="color:var(--muted);font-size:11px">78%</span></div>
+        <div class="skill-item"><span style="min-width:80px">RAG / LLM</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div><span style="color:var(--muted);font-size:11px">60%</span></div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-name">languages</div>
+        <div class="skill-item"><span style="min-width:80px">Python</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div><span style="color:var(--muted);font-size:11px">92%</span></div>
+        <div class="skill-item"><span style="min-width:80px">JavaScript</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div><span style="color:var(--muted);font-size:11px">82%</span></div>
+        <div class="skill-item"><span style="min-width:80px">TypeScript</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div><span style="color:var(--muted);font-size:11px">70%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Java / C++</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div><span style="color:var(--muted);font-size:11px">65%</span></div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-name">databases</div>
+        <div class="skill-item"><span style="min-width:80px">SQLite/PG</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div><span style="color:var(--muted);font-size:11px">85%</span></div>
+        <div class="skill-item"><span style="min-width:80px">MongoDB</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div><span style="color:var(--muted);font-size:11px">70%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Redis</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div><span style="color:var(--muted);font-size:11px">72%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Firebase</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:68%"></div></div><span style="color:var(--muted);font-size:11px">68%</span></div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-name">devops / tools</div>
+        <div class="skill-item"><span style="min-width:80px">Git</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div><span style="color:var(--muted);font-size:11px">88%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Docker</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div><span style="color:var(--muted);font-size:11px">65%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Linux</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div><span style="color:var(--muted);font-size:11px">78%</span></div>
+        <div class="skill-item"><span style="min-width:80px">Celery/Redis</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div><span style="color:var(--muted);font-size:11px">75%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── JOURNEY TIMELINE ── -->
+  <section id="journey" style="margin-bottom:40px">
+    <div class="section-header">
+      <span class="sh-symbol">$</span>
+      <span class="sh-title">git log --oneline ~/journey/</span>
+      <span class="sh-sub">— 3-year commit history</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" style="animation-delay:.1s">
+        <div class="tl-date">Sep 2023 — present</div>
+        <div class="tl-title">B.Tech CSE @ VIT Bhopal  ·  CGPA 8.44</div>
+        <div class="tl-desc">Core CS: DSA, DBMS, OS, Computer Networks, Architecture, ML, Deep Learning</div>
+      </div>
+      <div class="tl-item" style="animation-delay:.2s">
+        <div class="tl-date">May 2023 — present</div>
+        <div class="tl-title">B.S. Data Science @ IIT Madras  ·  CGPA 8.20</div>
+        <div class="tl-desc">Dual degree (online) — NLP, statistical learning, data engineering, applied AI</div>
+      </div>
+      <div class="tl-item" style="animation-delay:.3s">
+        <div class="tl-date">Phase 1 · 2023</div>
+        <div class="tl-title" style="color:var(--muted)">Foundation</div>
+        <div class="tl-sub">Python · SQL · HTML/CSS · Flask basics · DBMS projects · TCP Server</div>
+        <div class="tl-desc">MATLAB cert · Embedded C cert · Computer Networking cert</div>
+      </div>
+      <div class="tl-item" style="animation-delay:.4s">
+        <div class="tl-date">Phase 2 · 2024</div>
+        <div class="tl-title" style="color:var(--cyan)">Full-Stack Emergence</div>
+        <div class="tl-sub">CampusCart · LocalEcho · Kwizzy · Multi-Modal AI App · DBMS Projects</div>
+        <div class="tl-desc">SIH Hackathon · EPICS/GDG · HuggingFace NER + Resume Analyzer deployments · FastAPI coursework</div>
+      </div>
+      <div class="tl-item" style="animation-delay:.5s">
+        <div class="tl-date">Phase 3 · 2025</div>
+        <div class="tl-title" style="color:var(--green)">Advanced Systems + AI</div>
+        <div class="tl-sub">PPA V2 (Celery/Redis/JWT) · InventoryPro (Next.js/TypeScript) · JournalApp (PWA) · Genome Pipeline</div>
+        <div class="tl-desc">Nascom Agentic AI Hackathon · LLM Agentic Assistant (in progress) · ML Kaggle Pipeline (0.826 score)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATIONS ── -->
+  <section style="margin-bottom:40px">
+    <div class="section-header">
+      <span class="sh-symbol">$</span>
+      <span class="sh-title">ls ~/certifications/</span>
+    </div>
+    <div class="cert-list">
+      <div class="cert-item">
+        <span class="cert-badge">Feb 2025</span>
+        <span class="cert-name">NLP with Transformers using Hugging Face</span>
+        <span class="cert-issuer">IIT Madras</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">Oct 2024</span>
+        <span class="cert-name">The Bits and Bytes of Computer Networking</span>
+        <span class="cert-issuer">Google</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">Dec 2023</span>
+        <span class="cert-name">Embedded C and ARM Cortex Microcontrollers</span>
+        <span class="cert-issuer">NIELIT Calicut</span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">Aug 2023</span>
+        <span class="cert-name">MATLAB Onramp and Simulink Onramp</span>
+        <span class="cert-issuer">MathWorks</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" style="margin-bottom:60px">
+    <div class="section-header">
+      <span class="sh-symbol">$</span>
+      <span class="sh-title">ping parth --connect</span>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-item" onclick="window.open('mailto:parthjain0722@gmail.com')">
+        <span class="contact-icon">@</span>
+        <div><div class="contact-label">email</div><div class="contact-val">parthjain0722@gmail.com</div></div>
+      </div>
+      <div class="contact-item" onclick="window.open('https://github.com/jainparth22')">
+        <span class="contact-icon">&lt;/&gt;</span>
+        <div><div class="contact-label">github</div><div class="contact-val">github.com/jainparth22</div></div>
+      </div>
+      <div class="contact-item" onclick="window.open('https://linkedin.com/in/jainparth22')">
+        <span class="contact-icon">in</span>
+        <div><div class="contact-label">linkedin</div><div class="contact-val">linkedin.com/in/jainparth22</div></div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">↓</span>
+        <div><div class="contact-label">resume</div><div class="contact-val">download PDF →</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div style="border-top:1px solid var(--border);padding:20px 0;text-align:center;color:var(--muted);font-size:12px">
+    <span style="color:var(--green)">parth@portfolio</span>:<span style="color:var(--yellow)">~</span>$ Built with HTML · CSS · Vanilla JS · deployed on Vercel<span class="cursor-blink" style="margin-left:4px"></span>
+  </div>
+
+</div><!-- /desktop -->
+
+<script>
+/* ── DATA ── */
+const PROJECTS = [
+  { title:"PPA V2 — Placement Portal", desc:"Scalable multi-role platform: 40+ REST APIs, JWT RBAC, Celery/Redis async queue, PDF export, AI resume scoring.", stack:["Flask","Vue.js","Celery","Redis","JWT"], tags:["flask","vue"], metric:"40% latency cut · 30% admin effort saved", featured:true },
+  { title:"Multi-Modal AI Web App", desc:"OCR + ASR + NLP + Summarization in one login-based app. Whisper, Tesseract, PEGASUS, SpaCy/Sentence-BERT.", stack:["Flask","Vue.js","Whisper","Tesseract","PEGASUS"], tags:["flask","vue","ml"], metric:"95% transcription · 90% OCR · 45% better ER extraction", featured:true },
+  { title:"ML Classification Pipeline", desc:"200K+ record text classifier. Voting ensemble of 15+ models, TF-IDF 60K features, Bayesian tuning.", stack:["Python","scikit-learn","NLP","TF-IDF"], tags:["ml"], metric:"0.826 Kaggle score · 12% overfitting reduction" },
+  { title:"InventoryPro", desc:"Next.js 16 inventory SaaS with TypeScript, Prisma ORM, SSR, real-time Recharts dashboards, SWR.", stack:["Next.js","TypeScript","Prisma","React","Recharts"], tags:["react"], metric:"SSR + real-time analytics" },
+  { title:"CampusCart", desc:"On-demand university delivery platform. 5K+ monthly transactions at 99.9% uptime.", stack:["Flask","SQLite","Vue.js","Gunicorn","Render"], tags:["flask","vue"], metric:"70% faster orders · 40% better retention" },
+  { title:"Genome Analysis Pipeline", desc:"Bioinformatics: assembly, variant calling, CNN-LSTM pathogenicity prediction on 1000+ sequences.", stack:["Python","TensorFlow","Keras","scikit-learn"], tags:["ml"], metric:"96% pathogenicity accuracy · 35% quality boost" },
+  { title:"NO₂ Satellite Downscaling", desc:"Random Forest ML pipeline fusing Sentinel-5P GeoTIFF satellite data + CPCB ground stations into fine-res pollution maps.", stack:["scikit-learn","NumPy","Streamlit","Plotly"], tags:["ml","hackathon"], metric:"EPICS/GDG Hackathon" },
+  { title:"SIH BlackSwan — DRDO App", desc:"Flutter mobile app for DRDO (Smart India Hackathon). JWT auth, file handling, Lottie animations.", stack:["Flutter","Node.js","MongoDB","JWT"], tags:["flutter","hackathon"], metric:"Smart India Hackathon · DRDO" },
+  { title:"JournalApp — PWA", desc:"Offline-first Progressive Web App with Firebase Firestore, IndexedDB sync, and Framer Motion animations.", stack:["React 19","Vite","Firebase","TailwindCSS","Framer Motion"], tags:["react"], metric:"PWA · offline-first · installable" },
+  { title:"Kwizzy — Quiz Platform", desc:"Full-stack quiz app with real-time analytics, Pinia state, Celery background workers, Chart.js dashboards.", stack:["Vue 3","Flask","Pinia","Chart.js","Celery"], tags:["flask","vue"], metric:"Real-time analytics" },
+  { title:"LLM Agentic Assistant", desc:"Ongoing: RAG + Vector DB + FastAPI for context-aware responses, autonomous tool-calling, long-term memory.", stack:["FastAPI","RAG","Vector DB","Redis"], tags:["ml"], metric:"In progress · Nascom Hackathon concept" },
+  { title:"Resume Analyzer", desc:"Semantic similarity between resumes and JDs using sentence-transformers (all-MiniLM-L6-v2), deployed on HuggingFace.", stack:["Sentence-BERT","Gradio","PyTorch"], tags:["ml"], metric:"Live on HuggingFace Spaces" },
+];
+
+/* ── RENDER PROJECTS ── */
+function renderProjects(filter) {
+  const grid = document.getElementById('projects-grid');
+  const filtered = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.tags.includes(filter));
+  grid.innerHTML = filtered.map(p => `
+    <div class="proj-card ${p.featured ? 'featured' : ''}">
+      <div class="proj-title">${p.title}${p.featured ? '<span class="proj-star">★ flagship</span>' : ''}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-stack">${p.stack.map(s => `<span class="proj-tech">${s}</span>`).join('')}</div>
+      ${p.metric ? `<div class="proj-metric">→ ${p.metric}</div>` : ''}
+    </div>
+  `).join('');
+}
+renderProjects('all');
+
+document.getElementById('filter-row').addEventListener('click', e => {
+  if (!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderProjects(e.target.dataset.filter);
+});
+
+/* ── COUNTERS ── */
+function countUp(el, target, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    el.textContent = Math.min(Math.round(start), target) + (target >= 100 ? '+' : '');
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+setTimeout(() => {
+  countUp(document.getElementById('s1'), 24, 1200);
+  countUp(document.getElementById('s2'), 40, 1400);
+  countUp(document.getElementById('s3'), 100, 1600);
+  countUp(document.getElementById('s4'), 4, 800);
+}, 2200);
+
+/* ── CLOCK + UPTIME ── */
+let uptimeSec = 0;
+setInterval(() => {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    String(now.getHours()).padStart(2,'0') + ':' +
+    String(now.getMinutes()).padStart(2,'0') + ':' +
+    String(now.getSeconds()).padStart(2,'0');
+  uptimeSec++;
+  const m = Math.floor(uptimeSec/60), s = uptimeSec%60;
+  document.getElementById('uptime').textContent = m > 0 ? m+'m '+s+'s' : s+'s';
+}, 1000);
+
+/* ── SCROLL NAV ── */
+function scrollTo(id) {
+  const el = document.getElementById(id) || document.getElementById('section-'+id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ── BOOT SEQUENCE ── */
+const bootLines = [
+  { text:'ParthOS BIOS v2.7 — Copyright 2027 Parth Jain', cls:'white', delay:0 },
+  { text:'CPU: 8-core Python/JS/TS runtime  |  RAM: 24+ projects loaded', cls:'', delay:150 },
+  { text:'Storage: 3 years of commits detected', cls:'', delay:300 },
+  { text:'', cls:'', delay:380 },
+  { text:'Detecting dual-degree configuration...', cls:'', delay:430 },
+  { text:'  [OK] VIT Bhopal — B.Tech CSE  (CGPA 8.44)', cls:'green', delay:580 },
+  { text:'  [OK] IIT Madras — B.S. Data Science  (CGPA 8.20)', cls:'green', delay:720 },
+  { text:'', cls:'', delay:800 },
+  { text:'Loading skill modules...', cls:'', delay:850 },
+  { text:'  Flask ........... [OK]   Vue.js ........... [OK]', cls:'green', delay:950 },
+  { text:'  TensorFlow ....... [OK]   Next.js .......... [OK]', cls:'green', delay:1020 },
+  { text:'  JWT/RBAC ......... [OK]   Celery/Redis ..... [OK]', cls:'green', delay:1090 },
+  { text:'  scikit-learn ..... [OK]   Flutter .......... [OK]', cls:'green', delay:1160 },
+  { text:'', cls:'', delay:1220 },
+  { text:'Mounting project filesystem (24 repos)...', cls:'cyan', delay:1270 },
+  { text:'', cls:'', delay:1350 },
+  { text:'██████████████████████████████ 100%', cls:'green', delay:1400 },
+  { text:'', cls:'', delay:1500 },
+  { text:'▲ PARTH OS — READY', cls:'big', delay:1550 },
+  { text:'Type  help  in the terminal below to explore', cls:'cyan', delay:1700 },
+];
+const bootEl = document.getElementById('boot-lines');
+bootLines.forEach(l => {
+  setTimeout(() => {
+    const d = document.createElement('div');
+    d.className = 'boot-line ' + l.cls;
+    d.textContent = l.text || ' ';
+    d.style.animationDelay = '0ms';
+    bootEl.appendChild(d);
+  }, l.delay);
+});
+setTimeout(() => {
+  const boot = document.getElementById('boot');
+  boot.classList.add('hidden');
+  setTimeout(() => { boot.style.display='none'; }, 700);
+}, 2300);
+
+/* ── INTERACTIVE TERMINAL ── */
+const output = document.getElementById('term-output');
+const input  = document.getElementById('term-input');
+const curPath = document.getElementById('cur-path');
+let currentDir = '~/home';
+
+const COMMANDS = {
+  help: () => [
+    {t:'Available commands:', c:'yellow'},
+    {t:'  ls [dir]         — list directory contents', c:''},
+    {t:'  cat [file]       — read file contents', c:''},
+    {t:'  cd [dir]         — change directory', c:''},
+    {t:'  run [project]    — launch a project', c:''},
+    {t:'  whoami           — identify current user', c:''},
+    {t:'  skills           — show skill proficiency', c:''},
+    {t:'  projects         — list all projects', c:''},
+    {t:'  contact          — show contact info', c:''},
+    {t:'  clear            — clear terminal', c:''},
+    {t:'  neofetch         — system info', c:''},
+    {t:'  easter           — ???', c:'muted'},
+  ],
+  whoami: () => [{t:'parth jain — full-stack engineer · ai/ml practitioner · dual-degree student', c:'green'}],
+  ls: (args) => {
+    const dir = args[0] || currentDir;
+    const dirs = {
+      '~/home':     [{t:'drwxr-xr-x  projects/', c:'cyan'},{t:'drwxr-xr-x  skills/', c:'cyan'},{t:'drwxr-xr-x  certifications/', c:'cyan'},{t:'-rw-r--r--  about.md', c:''},{t:'-rw-r--r--  contact.json', c:''}],
+      'projects':   PROJECTS.slice(0,6).map(p => ({t:`-rw-r--r--  ${p.title.toLowerCase().replace(/\s/g,'-').replace(/[^a-z0-9-]/g,'')}`, c:''})).concat([{t:'... and 18 more', c:'muted'}]),
+      'skills':     [{t:'-rw-r--r--  backend.json', c:''},{t:'-rw-r--r--  frontend.json', c:''},{t:'-rw-r--r--  ml-ai.json', c:''},{t:'-rw-r--r--  languages.json', c:''},{t:'-rw-r--r--  databases.json', c:''}],
+    };
+    return dirs[dir] || dirs['~/home'];
+  },
+  cat: (args) => {
+    const f = args[0] || '';
+    const files = {
+      'about': [{t:'# Parth Jain', c:'green'},{t:'Full-Stack Engineer · AI/ML Practitioner', c:'white'},{t:'',c:''},{t:'Pursuing dual degrees:', c:''},{t:'  • B.Tech CSE @ VIT Bhopal (CGPA 8.44)', c:'cyan'},{t:'  • B.S. Data Science @ IIT Madras (CGPA 8.20)', c:'cyan'},{t:'',c:''},{t:'3 years · 24+ projects · 100+ DSA problems', c:'muted'}],
+      'about.md': [{t:'# Parth Jain', c:'green'},{t:'Full-Stack Engineer · AI/ML Practitioner', c:'white'},{t:'',c:''},{t:'Pursuing dual degrees:', c:''},{t:'  • B.Tech CSE @ VIT Bhopal (CGPA 8.44)', c:'cyan'},{t:'  • B.S. Data Science @ IIT Madras (CGPA 8.20)', c:'cyan'},{t:'',c:''},{t:'3 years · 24+ projects · 100+ DSA problems', c:'muted'}],
+      'contact.json': [{t:'{', c:'muted'},{t:'  "email":    "parthjain0722@gmail.com",', c:''},{t:'  "github":   "github.com/jainparth22",', c:'cyan'},{t:'  "linkedin": "linkedin.com/in/jainparth22"', c:'cyan'},{t:'}', c:'muted'}],
+    };
+    return files[f] || [{t:`cat: ${f}: No such file or directory`, c:'red'}];
+  },
+  cd: (args) => {
+    const d = args[0] || '~/home';
+    currentDir = d;
+    curPath.textContent = d;
+    return [{t:`Changed to ${d}`, c:'muted'}];
+  },
+  run: (args) => {
+    const p = (args[0] || '').toLowerCase();
+    const apps = {
+      'ppav2': [{t:'Launching PPA V2 — Placement Portal...', c:'green'},{t:'[BOOT] Flask app · 40 APIs · JWT RBAC · Redis/Celery', c:''},{t:'[INFO] Multi-role: student / recruiter / admin', c:''},{t:'[OK]   Running on http://localhost:5000', c:'green'}],
+      'kwizzy': [{t:'Launching Kwizzy — Quiz Platform...', c:'green'},{t:'[BOOT] Flask + Vue 3 + Pinia + Chart.js', c:''},{t:'[OK]   Celery workers started', c:'green'},{t:'[OK]   Running on http://localhost:8080', c:'green'}],
+      'campuscart': [{t:'Launching CampusCart...', c:'green'},{t:'[BOOT] Flask REST backend · SQLite · Vue frontend', c:''},{t:'[INFO] 5000+ monthly transactions · 99.9% uptime', c:''},{t:'[OK]   Running on https://campuscart.onrender.com', c:'green'}],
+      'genome': [{t:'Launching Genome Analysis Pipeline...', c:'green'},{t:'[BOOT] Loading TensorFlow/Keras CNN-LSTM model', c:''},{t:'[INFO] 96% pathogenicity classification accuracy', c:''},{t:'[WARN] Requires genomic .fastq input files', c:'yellow'}],
+    };
+    return apps[p] || [{t:`run: ${args[0] || '?'}: project not found. Try: ppav2 · kwizzy · campuscart · genome`, c:'red'}];
+  },
+  skills: () => [
+    {t:'SKILL PROFICIENCY MATRIX', c:'yellow'},
+    {t:'─────────────────────────────────────────', c:'muted'},
+    {t:'Python         ████████████████████ 92%', c:'green'},
+    {t:'Flask          ███████████████████░ 92%', c:'green'},
+    {t:'Vue.js 3       █████████████████░░░ 85%', c:'green'},
+    {t:'scikit-learn   █████████████████░░░ 85%', c:'cyan'},
+    {t:'React 19       ████████████████░░░░ 78%', c:'cyan'},
+    {t:'TensorFlow     ███████████████░░░░░ 75%', c:'cyan'},
+    {t:'Next.js        ██████████████░░░░░░ 72%', c:''},
+    {t:'Docker         █████████████░░░░░░░ 65%', c:''},
+  ],
+  projects: () => [{t:'ALL PROJECTS (24):', c:'yellow'}, ...PROJECTS.map((p,i) => ({t:`  ${String(i+1).padStart(2,'0')}. ${p.title}`, c: p.featured ? 'green' : ''}))],
+  contact: () => [
+    {t:'CONTACT CHANNELS', c:'yellow'},
+    {t:'  Email:    parthjain0722@gmail.com', c:''},
+    {t:'  GitHub:   github.com/jainparth22', c:'cyan'},
+    {t:'  LinkedIn: linkedin.com/in/jainparth22', c:'cyan'},
+    {t:'  Phone:    +91 94797 35365', c:''},
+  ],
+  neofetch: () => [
+    {t:'                    parth@portfolio', c:'green'},
+    {t:'    /\\              ─────────────────', c:'green'},
+    {t:'   /  \\             OS:     ParthOS v2027', c:''},
+    {t:'  / /\\ \\            Host:   VIT Bhopal + IIT Madras', c:''},
+    {t:' / ____ \\           Kernel: Flask 3.0 / Next.js 16', c:''},
+    {t:'/_/    \\_\\          Shell:  python 3.11', c:''},
+    {t:'                    Uptime: 3 years, 24 projects', c:''},
+    {t:'                    CGPA:   8.44 (VIT) · 8.20 (IIT-M)', c:'cyan'},
+    {t:'                    Memory: 100+ DSA solved', c:''},
+  ],
+  easter: () => [
+    {t:'', c:''},
+    {t:'Achievement unlocked: Curiosity.exe', c:'yellow'},
+    {t:'', c:''},
+    {t:'"The best code is code that ships."', c:'green'},
+    {t:'       — Parth, probably at 2am', c:'muted'},
+    {t:'', c:''},
+    {t:'Fun facts:', c:'cyan'},
+    {t:'  → 2nd rank at State Level NCSC (National Children Science Congress)', c:''},
+    {t:'  → Solved 100+ DSA problems just for fun (mostly)', c:''},
+    {t:'  → Runs two engineering degrees simultaneously', c:''},
+    {t:'  → Nature photography enthusiast', c:''},
+  ],
+  clear: () => { output.innerHTML = ''; return []; },
+};
+
+function printLine(text, cls='') {
+  const d = document.createElement('div');
+  d.className = 'output-line ' + cls;
+  d.textContent = text || ' ';
+  output.appendChild(d);
+  output.scrollTop = output.scrollHeight;
+}
+
+function printPrompt(cmd) {
+  const d = document.createElement('div');
+  d.className = 'prompt-line';
+  d.innerHTML = `<span class="p-user">parth</span><span class="p-at">@</span><span class="p-host">portfolio</span><span class="p-colon">:</span><span class="p-path">${curPath.textContent}</span><span class="p-dollar">$</span>&nbsp;<span style="color:var(--white)">${cmd}</span>`;
+  output.appendChild(d);
+}
+
+const history = [];
+let histIdx = -1;
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const raw = input.value.trim();
+    if (!raw) return;
+    history.unshift(raw);
+    histIdx = -1;
+    printPrompt(raw);
+    const parts = raw.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const args = parts.slice(1);
+    const fn = COMMANDS[cmd];
+    if (fn) {
+      const lines = fn(args);
+      lines.forEach(l => {
+        const d = document.createElement('div');
+        d.className = 'output-line ' + (l.c || '');
+        d.textContent = l.t || ' ';
+        output.appendChild(d);
+      });
+    } else {
+      printLine(`bash: ${cmd}: command not found. Type 'help' for available commands.`, 'red');
+    }
+    output.appendChild(Object.assign(document.createElement('div'), {className:'blank'}));
+    output.scrollTop = output.scrollHeight;
+    input.value = '';
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
+    else { histIdx = -1; input.value = ''; }
+  }
+});
+
+/* welcome message */
+setTimeout(() => {
+  [{t:'Welcome to ParthOS v2027', c:'green'},{t:'Type  help  to see available commands', c:'muted'},{t:'', c:''}]
+    .forEach(l => { const d = document.createElement('div'); d.className='output-line '+l.c; d.textContent=l.t||' '; output.appendChild(d); });
+  input.focus();
+}, 2500);
+
+document.getElementById('live-terminal').addEventListener('click', () => input.focus());
+</script>
+</body>
+</html>
