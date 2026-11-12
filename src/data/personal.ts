@@ -55,12 +55,12 @@ export const achievements = [
     description: 'Consistent daily coding on GeeksforGeeks — one of the longest active streaks.',
     color: 'text-orange-400',
   },
-  {
-    icon: '⚡',
-    title: '100+ LeetCode Problems',
-    description: 'Focused on time & space complexity — arrays, trees, graphs, DP, backtracking.',
-    color: 'text-yellow-400',
-  },
+  // {
+  //   icon: '⚡',
+  //   title: '100+ LeetCode Problems',
+  //   description: 'Focused on time & space complexity — arrays, trees, graphs, DP, backtracking.',
+  //   color: 'text-yellow-400',
+  // },
   {
     icon: '🏆',
     title: 'Kaggle MAP@3: 0.75084',
