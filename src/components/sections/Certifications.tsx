@@ -41,13 +41,13 @@ export default function Certifications() {
                 color: 'text-orange-400',
                 border: 'border-orange-400/20',
               },
-              {
-                icon: '⚡',
-                title: '100+ LeetCode Problems',
-                desc: 'Arrays, trees, graphs, DP, backtracking — focused on time & space complexity.',
-                color: 'text-yellow-400',
-                border: 'border-yellow-400/20',
-              },
+              // {
+              //   icon: '⚡',
+              //   title: '100+ LeetCode Problems',
+              //   desc: 'Arrays, trees, graphs, DP, backtracking — focused on time & space complexity.',
+              //   color: 'text-yellow-400',
+              //   border: 'border-yellow-400/20',
+              // },
               {
                 icon: '📊',
                 title: 'Kaggle MAP@3: 0.75084',
