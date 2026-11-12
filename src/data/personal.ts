@@ -89,7 +89,7 @@ export const achievements = [
 
 export const stats = [
   { label: 'Coding Streak', value: '900+', suffix: ' days', color: 'text-orange-400' },
-  { label: 'LeetCode', value: '100+', suffix: ' solved', color: 'text-yellow-400' },
+  // { label: 'LeetCode', value: '100+', suffix: ' solved', color: 'text-yellow-400' },
   { label: 'GitHub Repos', value: '34', suffix: ' public', color: 'text-cyan-400' },
   { label: 'Degrees', value: '2', suffix: ' (CS + DS)', color: 'text-violet-400' },
 ];
