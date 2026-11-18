@@ -75,9 +75,10 @@ export const achievements = [
   },
 ];
 
+// Hero stats: things only your own work can claim (not generic counts)
 export const stats = [
-  { label: 'GfG Coding Streak', value: '950+', suffix: ' days', color: 'text-orange-400' },
-  { label: 'LeetCode Solved', value: '200+', suffix: '', color: 'text-yellow-400' },
-  { label: 'Live Deployed Apps', value: '3', suffix: '', color: 'text-cyan-400' },
-  { label: 'Degrees, in parallel', value: '2', suffix: ' (CS + DS)', color: 'text-violet-400' },
+  { label: 'Kaggle MAP@3 (LLM logit scoring beat fine-tuning)', value: '0.75', suffix: '', color: 'text-violet-400' },
+  { label: 'Double-bookings in concurrent race tests', value: '0', suffix: '', color: 'text-cyan-400' },
+  { label: 'Less RAM on my Hugging Face matcher', value: '50%', suffix: '', color: 'text-emerald-400' },
+  { label: 'REST endpoints in my live Placement Portal', value: '53', suffix: '', color: 'text-orange-400' },
 ];
