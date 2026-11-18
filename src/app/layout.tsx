@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Parth Jain | Backend & ML Engineer Portfolio',
   description:
-    'Computer Science & Data Science student specializing in production backend systems, distributed architectures, and deployable ML/NLP pipelines. 900+ day streak, 34 GitHub repos.',
+    'Computer Science & Data Science student building backend systems, full-stack applications, and deployable ML/NLP pipelines. 969-day coding streak, 212 LeetCode problems, IIT Madras diplomas.',
   keywords: [
     'Parth Jain',
     'Backend Engineer',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Parth Jain | Portfolio',
     description:
-      'Backend & ML Engineer | Dual Degree CS + Data Science | Distributed Systems Builder',
+      'Backend & ML Engineer | Dual Degree CS + Data Science | Hugging Face Open-Source Contributor',
     url: 'https://jainparth22.github.io',
     siteName: 'Parth Jain Portfolio',
     locale: 'en_US',

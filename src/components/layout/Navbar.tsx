@@ -8,10 +8,12 @@ import { personalInfo } from '@/data/personal';
 
 const navLinks = [
   { label: 'About', href: '#about' },
+  { label: 'Education', href: '#education' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
   { label: 'Certs', href: '#certifications' },
+  { label: 'Badges', href: '#badges' },
   { label: 'Contact', href: '#contact' },
 ];
 

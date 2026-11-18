@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send, Copy, Check, MessageSquare, MapPin } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, Copy, Check, MessageSquare, MapPin, Phone } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { personalInfo } from '@/data/personal';
 
@@ -41,7 +41,7 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <SectionHeading
           title="Get In Touch"
-          subtitle="Interested in collaborating on distributed systems, ML projects, or backend engineering? Let's connect!"
+          subtitle="Interested in backend engineering, ML projects, or open-source collaboration? Let's connect!"
           accent="cyan"
         />
 
@@ -108,6 +108,14 @@ export default function Contact() {
                   <span>Inspect Code on GitHub</span>
                 </a>
 
+                <a
+                  href={`tel:${personalInfo.phone.replace(/-/g, '')}`}
+                  className="flex items-center gap-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900/40 text-zinc-300 hover:text-cyan-400 hover:border-zinc-700 hover:bg-zinc-800/60 transition-all text-sm font-medium"
+                >
+                  <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>{personalInfo.phone}</span>
+                </a>
+
                 <div className="flex items-center gap-3 p-3 rounded-xl border border-zinc-800 bg-zinc-900/40 text-zinc-400 text-sm">
                   <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
                   <span>India (IST / UTC +5:30)</span>
@@ -170,7 +178,7 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Hi Parth, I saw your work on Distributed Rate Limiter / ML pipelines..."
+                  placeholder="Hi Parth, I saw your Placement Portal / Hugging Face work..."
                   className="w-full px-4 py-2.5 rounded-xl border border-zinc-800 bg-zinc-950/80 text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cyan-400/80 focus:ring-1 focus:ring-cyan-400/80 text-sm transition-all resize-none"
                 />
               </div>

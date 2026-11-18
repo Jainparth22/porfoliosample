@@ -31,6 +31,7 @@ export default function CertCard({ cert, index = 0 }: CertCardProps) {
           {cert.platform && (
             <p className="text-xs text-zinc-500 mt-0.5">{cert.platform}</p>
           )}
+          {cert.year && <p className="text-xs text-zinc-600 mt-0.5">{cert.year}</p>}
         </div>
       </div>
 

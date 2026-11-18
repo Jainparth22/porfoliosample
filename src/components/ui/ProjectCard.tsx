@@ -106,13 +106,21 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
       {/* Key highlights */}
       {project.highlights && project.highlights.length > 0 && (
         <ul className="mb-4 space-y-1">
-          {project.highlights.slice(0, 3).map((h, i) => (
+          {project.highlights.slice(0, 4).map((h, i) => (
             <li key={i} className="flex items-start gap-2 text-xs text-zinc-500">
               <span className="text-cyan-500 mt-0.5 shrink-0">›</span>
               {h}
             </li>
           ))}
         </ul>
+      )}
+
+      {/* What to look at */}
+      {project.showcase && (
+        <p className="mb-4 text-xs text-zinc-400 leading-relaxed border-l-2 border-violet-400/40 pl-3">
+          <span className="text-violet-400 font-medium">Worth a look: </span>
+          {project.showcase}
+        </p>
       )}
 
       {/* Tech stack */}
@@ -154,7 +162,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             Live Demo
           </a>
         ) : (
-          <span className="ml-auto text-xs text-zinc-600 italic">Deploy coming soon</span>
+          <span className="ml-auto text-xs text-zinc-600 italic">Run locally</span>
         )}
       </div>
     </motion.div>

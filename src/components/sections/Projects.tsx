@@ -14,7 +14,7 @@ const tabs: { label: string; value: 'all' | ProjectCategory }[] = [
   { label: '🤖 ML / NLP', value: 'ml' },
   { label: '🏗️ Backend', value: 'backend' },
   { label: '⚡ Distributed', value: 'distributed' },
-  { label: '📚 Coursework', value: 'coursework' },
+  { label: '📚 Notes & Coursework', value: 'coursework' },
 ];
 
 export default function Projects() {
@@ -38,7 +38,7 @@ export default function Projects() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           title="Projects"
-          subtitle="34 public repos spanning ML, distributed systems, full-stack, and coursework."
+          subtitle="36 public repos on GitHub: full-stack apps with live demos, ML and GenAI work, distributed-systems builds, and study notes."
           accent="violet"
         />
 
@@ -98,7 +98,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-700 text-zinc-300 hover:text-white hover:border-cyan-400/50 hover:bg-cyan-400/5 transition-all text-sm font-medium"
           >
-            🐙 View all 34 repositories on GitHub →
+            🐙 View all 36 repositories on GitHub →
           </a>
         </motion.div>
       </div>

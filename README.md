@@ -56,7 +56,9 @@ Portfolio/
 │   │   ├── projects.ts        # 34 projects, categories, descriptions, tech stacks, links
 │   │   ├── skills.ts          # Skill groups, badges, icons, and colors
 │   │   ├── experience.ts      # Roles, companies, bullet points, and dates
-│   │   └── certifications.ts  # Certifications, issuers, platforms, and skills
+│   │   ├── education.ts       # Degrees, IITM milestones, campus activities
+│   │   ├── badges.ts          # AWS / ServiceNow / HackerRank badges + coding profile stats
+│   │   └── certifications.ts  # Certificates by category (IITM, workshops, courses, HackerRank)
 │   └── lib/
 │       └── utils.ts           # Class merging helper (clsx + twMerge)
 ├── tailwind.config.ts         # Theme colors, glow effects, keyframe animations
@@ -149,3 +151,14 @@ Open `src/data/certifications.ts`:
 3. Click **"Add New Project"**, select your repository, and click **"Deploy"**.
 4. Your portfolio will be live worldwide on a fast CDN with automatic SSL!
 
+
+---
+
+## Update log (Nov 2026)
+
+- New sections: **Education** (`education.ts`) and **Coding Profiles & Badges** (`badges.ts`).
+- Certifications now have category filter tabs and dates; the full list lives in `certifications.ts`.
+- Hero stats, achievements and about text use verified figures (969-day GfG streak, 212 LeetCode problems).
+- Phone number added to About and Contact. CGPA and school marks are intentionally not shown.
+- Project entries for Placement Portal, Healthcare, InventoryPro, Text Classification, Vehicle Parking and ML Inference API were corrected to match the resumes. Other repos are unchanged and still need owner review (see the comment at the top of `projects.ts`).
+- Streak and LeetCode numbers are snapshots from 18 Nov 2026; update `badges.ts` and `personal.ts` when they change.

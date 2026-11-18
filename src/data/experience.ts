@@ -1,5 +1,6 @@
 // ============================================================
 // EXPERIENCE DATA — Edit this file to update experience cards
+// Source of truth: CS Record/Consolidated Data/02_internships_and_experience.md
 // ============================================================
 
 export interface ExperienceItem {
@@ -16,19 +17,19 @@ export interface ExperienceItem {
 
 export const experiences: ExperienceItem[] = [
   {
-    company: 'MPOnline Limited',
+    company: 'MPOnline Limited (Govt. of MP & TCS Joint Venture)',
     role: 'AI/ML & Software Engineering Intern',
-    period: 'May 2026 – Jul 2026',
+    period: '20 May 2026 – 31 Jul 2026',
     location: 'Bhopal, India',
     type: 'Internship',
     logo: '🏛️',
     color: 'cyan',
     bullets: [
-      'Completed an intensive, structured training program covering full-stack development, MVC architecture, REST APIs, relational database design, and SQL/ER modeling.',
-      'Built comprehensive project work applying full-stack concepts and ML workflows, including feature engineering, model evaluation, and neural networks for NLP tasks.',
-      'Worked within a Government of Madhya Pradesh & TCS Joint Venture environment, gaining exposure to enterprise software delivery processes.',
+      'Completed two internship tracks (AI/ML, and Advanced Software Engineering & Development), each with a certificate of completion, covering full-stack development, MVC architecture, REST APIs, relational database design, SQL and ER modelling.',
+      'Built the capstone Smart Retail & Customer Intelligence Platform: OpenCV face recognition, product image classification, sentiment analysis and an FAQ chatbot behind a FastAPI gateway with a Streamlit dashboard.',
+      'Worked through end-to-end ML pipelines: feature engineering, model evaluation and neural networks for NLP tasks.',
     ],
-    tech: ['Python', 'ML', 'REST APIs', 'SQL', 'NLP', 'Full-Stack'],
+    tech: ['Python', 'FastAPI', 'Streamlit', 'OpenCV', 'scikit-learn', 'REST APIs', 'SQL'],
   },
   {
     company: 'Hugging Face',
@@ -39,11 +40,11 @@ export const experiences: ExperienceItem[] = [
     logo: '🤗',
     color: 'violet',
     bullets: [
-      'Designed and deployed a production-grade, two-tier semantic matching engine on Hugging Face Spaces, combining exact O(N) taxonomy mapping via FlashText with dynamic semantic gap-filling using KeyBERT and BGE-small embeddings.',
-      'Reduced inference memory footprint by 50% by sharing a single global SentenceTransformer instance between the embedding encoder and KeyBERT, preventing duplicate model loading in RAM.',
-      'Implemented hybrid retrieval scoring using asymmetric semantic similarity with BGE query prefixes, two-tier skill coverage with BFS cycle protection, and heuristic quality scoring — outperforming standard regex-based parsers.',
+      'Built and deployed a two-tier Resume Analyzer & Matcher on Hugging Face Spaces: exact O(N) taxonomy mapping with FlashText, plus semantic gap-filling with KeyBERT and BGE-small embeddings.',
+      'Cut inference memory by 50% by sharing one SentenceTransformer instance between the embedding encoder and KeyBERT.',
+      'Implemented hybrid retrieval scoring: asymmetric semantic similarity with BGE query prefixes, two-tier skill coverage with BFS cycle protection, and heuristic quality scoring.',
+      'Deployed a custom BERT-based NER tool and exposed model endpoints as REST APIs.',
     ],
-    tech: ['Python', 'Hugging Face Spaces', 'KeyBERT', 'BGE Embeddings', 'FlashText', 'Semantic Search'],
+    tech: ['Python', 'Hugging Face Spaces', 'Sentence Transformers', 'KeyBERT', 'FlashText', 'Gradio'],
   },
 ];
-

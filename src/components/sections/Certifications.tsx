@@ -1,27 +1,54 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/components/ui/SectionHeading';
 import CertCard from '@/components/ui/CertCard';
-import { certifications } from '@/data/certifications';
+import { certifications, certCategories, type CertCategory } from '@/data/certifications';
+import { achievements } from '@/data/personal';
 
 export default function Certifications() {
+  const [active, setActive] = useState<CertCategory | 'all'>('all');
+
+  const visible =
+    active === 'all' ? certifications : certifications.filter((c) => c.category === active);
+
+  const countFor = (id: CertCategory | 'all') =>
+    id === 'all' ? certifications.length : certifications.filter((c) => c.category === id).length;
+
   return (
     <section id="certifications" className="py-24 bg-zinc-950">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <SectionHeading
           title="Certifications"
-          subtitle="Continuous learning through structured programs from top institutions."
+          subtitle="IIT Madras diplomas and workshops, Coursera and NPTEL courses, and HackerRank skill tests."
           accent="violet"
         />
 
+        {/* Category filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {certCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActive(cat.id)}
+              className={`px-4 py-1.5 rounded-full border text-sm transition-colors ${
+                active === cat.id
+                  ? 'border-violet-400/60 bg-violet-400/10 text-violet-300'
+                  : 'border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-500 bg-zinc-900/60'
+              }`}
+            >
+              {cat.label} <span className="text-zinc-500">({countFor(cat.id)})</span>
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {certifications.map((cert, i) => (
+          {visible.map((cert, i) => (
             <CertCard key={cert.title} cert={cert} index={i} />
           ))}
         </div>
 
-        {/* Achievements section embedded here */}
+        {/* Achievements */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -33,50 +60,7 @@ export default function Certifications() {
             🏆 Achievements & Milestones
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              {
-                icon: '🔥',
-                title: '900+ Day Coding Streak',
-                desc: 'Daily coding on GeeksforGeeks — one of the longest active streaks.',
-                color: 'text-orange-400',
-                border: 'border-orange-400/20',
-              },
-              // {
-              //   icon: '⚡',
-              //   title: '100+ LeetCode Problems',
-              //   desc: 'Arrays, trees, graphs, DP, backtracking — focused on time & space complexity.',
-              //   color: 'text-yellow-400',
-              //   border: 'border-yellow-400/20',
-              // },
-              {
-                icon: '📊',
-                title: 'Kaggle MAP@3: 0.75084',
-                desc: 'SmartMCQ Solver — 2.8% above competition cutoff on private leaderboard.',
-                color: 'text-violet-400',
-                border: 'border-violet-400/20',
-              },
-              {
-                icon: '🥈',
-                title: '2nd Rank — State NCSC',
-                desc: 'Silver Medal at National Children Science Congress, State Level.',
-                color: 'text-slate-300',
-                border: 'border-slate-400/20',
-              },
-              {
-                icon: '🚀',
-                title: 'Multiple Production Deployments',
-                desc: 'Live apps on Vercel, Render, and Hugging Face Spaces.',
-                color: 'text-cyan-400',
-                border: 'border-cyan-400/20',
-              },
-              {
-                icon: '📦',
-                title: '34 Public GitHub Repos',
-                desc: 'ML, distributed systems, full-stack apps, and CS fundamentals.',
-                color: 'text-emerald-400',
-                border: 'border-emerald-400/20',
-              },
-            ].map((a, i) => (
+            {achievements.map((a, i) => (
               <motion.div
                 key={a.title}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -88,7 +72,7 @@ export default function Certifications() {
                 <span className="text-2xl shrink-0">{a.icon}</span>
                 <div>
                   <h4 className={`text-sm font-semibold ${a.color}`}>{a.title}</h4>
-                  <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{a.desc}</p>
+                  <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{a.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -98,4 +82,3 @@ export default function Certifications() {
     </section>
   );
 }
-

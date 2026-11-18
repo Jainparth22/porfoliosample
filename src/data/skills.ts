@@ -16,7 +16,7 @@ export const skillCategories: SkillCategory[] = [
     icon: '💻',
     color: 'text-cyan-400',
     bgColor: 'bg-cyan-400/10 border-cyan-400/20 text-cyan-300',
-    skills: ['Python', 'C++', 'TypeScript', 'JavaScript', 'SQL', 'HTML/CSS'],
+    skills: ['Python', 'C++', 'C', 'Java', 'TypeScript', 'JavaScript', 'SQL', 'HTML/CSS'],
   },
   {
     title: 'Backend & Frameworks',
