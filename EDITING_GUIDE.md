@@ -32,12 +32,15 @@ Hero, tech strip, 01 Shipped (dark panel), 02 Machine learning, 03 Experience, 0
 | Name, email, phone, social links | `src/data/personal.ts` | `personalInfo` |
 | 01 Shipped | `src/data/projects.ts` | every project with a `live:` link appears here automatically |
 | 02 Machine learning | `src/components/sections/Research.tsx` | the `slugs` list (repo names to feature) |
-| 04 All work and its tabs | `src/data/projects.ts`, tabs in `AllWork.tsx` | `projects`; `tabs` |
+| 04 All work (project cards) and its filter buttons | `src/data/projects.ts`, buttons in `AllWork.tsx` | `projects` (card shows category, title, `description`, first 4 `tech`, Code and Live links); `tabs` and `labelFor` in `AllWork.tsx` |
 | 03 Experience | `src/data/experience.ts` | `experiences` |
-| 05 Skills (plain text lines) | `src/data/skills.ts` | `skillCategories` (title and skills; `color` is unused) |
-| 06 Degrees and IITM progress | `src/data/education.ts` | `degrees`, `iitmMilestones` |
-| 06 Certificates | `src/data/certifications.ts` | `certifications` (`color` is unused) |
-| 06 Badges and coding profiles | `src/data/badges.ts` | `badges`, `codingProfiles` |
+| 05 Skills: big "Reach for first" line | `src/components/sections/Skills.tsx` | the `core` list at the top |
+| 05 Skills: numbered tiles | `src/data/skills.ts` | `skillCategories` (title and skills; `color` and `bgColor` are unused) |
+| 06 Degree cards (big "B.Tech" and "BS" word) | `src/data/education.ts` | `degrees`; the big word is the first word of `degree` |
+| 06 IITM progress timeline | `src/data/education.ts` | `iitmMilestones` (`title`, optional `date`) |
+| 06 Certificate tiles, grouped | `src/data/certifications.ts` | `certifications`; group headings come from `certCategories` (`color` and `skills` are unused) |
+| 06 Three big coding-profile blocks | `src/data/badges.ts` | `codingProfiles`: `platform`, `headline` (big text), `headlineLabel`, `url` (`facts`, `handle`, `color` are unused) |
+| 06 Badge tiles | `src/data/badges.ts` | `badges`: `title`, `issuer`, `date` (`url`, `color` unused) |
 | 07 How I work (your LinkedIn text) | `src/data/personal.ts` | `aboutIntro`, `aboutSections`, `aboutStack`, `aboutClosing` |
 | 08 Contact heading | `src/components/sections/Contact.tsx` | the heading text |
 | Browser tab title and link preview | `src/app/layout.tsx` | `metadata` |
@@ -87,15 +90,21 @@ Use exactly three `metrics` (the layout is three columns). `chartMin` and `chart
 ```
 The `color` and `skills` fields are required by the type but not displayed. `verifyUrl` makes the title a link.
 
-**Badge** (`badges.ts`, in `badges`): copy an entry; add `url: 'https://...'` if you have a public link (not displayed yet unless you add it to `Credentials.tsx`).
+**Badge** (`badges.ts`, in `badges`): copy an entry and change `title`, `issuer`, `date`. It appears as a tile in the Badges grid. `url` is stored but not shown yet; to link a badge, wrap the title in an `<a href={b.url}>` in `Credentials.tsx`.
+
+**Coding profile block** (`badges.ts`, in `codingProfiles`): `headline` is the big text (for example `'950+'`, `'200+'`, `'5 star'`), `headlineLabel` is the small line under it, `url` adds a "View profile" link. Keep headlines short; they are set at a very large size. There are three blocks in a row, so adding a fourth wraps to a new line.
+
+**Degree card** (`education.ts`, in `degrees`): the large accent word is the first word of `degree` (`'B.Tech, Computer Science'` shows "B.Tech"). Write `degree` so it starts with the short name.
+
+**IITM timeline step** (`education.ts`, in `iitmMilestones`): add `{ title: 'Diploma in X', date: 'Mar 2027' }`; `date` is optional. Steps show in the order written.
 
 **Experience** (`experience.ts`): copy one block; the first item is shown first. `logo` and `color` are unused.
 
-**Skill group** (`skills.ts`): add a string to a `skills: [...]` list, or copy a whole group (`title`, `color`, `bgColor`, `skills`).
+**Skill group** (`skills.ts`): add a string to a `skills: [...]` list, or copy a whole group (`title`, `color`, `bgColor`, `skills`). Each group becomes a numbered tile in order. The big "Reach for first" line is separate: edit the `core` array at the top of `Skills.tsx` (keep it to about 8 names so it fits on two lines).
 
 **Tech strip words** (`Marquee.tsx`): add or remove names in `items`.
 
-**A new filter tab in All work**: add the name to `ProjectCategory` in `projects.ts`, add a line to `tabs` in `AllWork.tsx`, then tag projects with it in `category`.
+**A new filter button in All work**: add the name to `ProjectCategory` in `projects.ts`, add a line to `tabs` in `AllWork.tsx`, add its card label to `labelFor` in the same file, then tag projects with it in `category`. The label on a card is the first category that is not `featured`.
 
 ## Remove something
 Delete the whole `{ ... },` block, or comment it out to keep it for later:
