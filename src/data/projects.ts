@@ -119,7 +119,7 @@ export const projects: Project[] = [
   {
     title: "FinSight AI: Multi-Agent Financial RAG",
     description: "Production-style RAG system for financial documents where a Researcher, Responder and Critic agent collaborate through LangGraph.",
-    longDescription: "Answers questions over annual reports and filings with evidence, and checks its own answers for hallucination before replying. Repo name is 'Langchain-Workshop'.",
+    longDescription: "Answers questions over annual reports and filings with evidence, and checks its own answers for hallucination before replying.",
     tech: ["LangGraph", "LangChain", "FAISS", "BM25", "Cross-encoder", "RAGAS", "Groq", "FastAPI", "SQLite"],
     github: "https://github.com/Jainparth22/Langchain-Workshop",
     flow: ["Question", "Input guard", "BM25 + FAISS", "Rerank", "Researcher, Responder, Critic"],
