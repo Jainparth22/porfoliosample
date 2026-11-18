@@ -78,16 +78,46 @@ export const stats = [
 ];
 
 // ------------------------------------------------------------
-// ABOUT TEXT: edit freely. Each string is one paragraph.
-// pullQuote is the large line in the hero (from your GitHub profile README).
-// TODO: merge your LinkedIn "About" text into aboutParagraphs.
+// ABOUT TEXT (merged from your LinkedIn About). Edit freely.
+// pullQuote = large line in the hero.
+// aboutIntro = opening paragraphs; aboutSections = titled blocks;
+// aboutClosing = last paragraph; aboutStack = the stack lines.
 // ------------------------------------------------------------
 export const pullQuote =
   'Most students build for the happy path. I build for edge cases, race conditions, and partial failures.';
 
-export const aboutParagraphs: string[] = [
-  'I am a final-year computer science student studying two degrees at once: a B.Tech in CSE at VIT Bhopal and a BS in Data Science and Applications at IIT Madras. I work across backend engineering, applied ML and GenAI, and system design.',
-  'On the backend I design modular services with explicit failure behaviour. My Healthcare booking system uses compare-and-set state changes, idempotency keys and slot holds so two patients cannot take the same slot, and it keeps working when the LLM, email or Redis is down. My Placement Portal falls back from Redis to memory, from Celery to a synchronous run, and from Postgres to SQLite instead of crashing.',
-  'On the ML side I treat experiments as evidence. On a 2,000-row STEM dataset I showed that zero-shot LLM logit scoring beat fine-tuning, and finished at 0.75 MAP@3 on the Kaggle private leaderboard. I published a semantic matcher on Hugging Face Spaces and cut its inference memory by half with one shared model instance.',
-  'Outside coursework I practise data structures every day (950+ day streak on GeeksforGeeks) and keep revision notes and system-design write-ups in public repositories.',
+export const aboutIntro: string[] = [
+  'I am a final-year CS student (IIT Madras + VIT) bridging advanced Machine Learning with production-grade backend systems. I do not just write CRUD APIs; I engineer resilient, scalable architectures that behave correctly under real-world constraints.',
 ];
+
+export const aboutSections: { title: string; text: string }[] = [
+  {
+    title: 'Architecture and distributed systems',
+    text: 'I build decoupled, event-driven backends using a modular monolith approach. This avoids premature microservices complexity while maintaining strict separation of concerns. By leveraging asynchronous message brokers, I ensure heavy background processing never blocks the core user flow.',
+  },
+  {
+    title: 'Concurrency and data integrity',
+    text: 'I design compare-and-set state machines to handle high concurrency. They prevent double-bookings and remove check-then-act race conditions, keeping state changes atomic and consistent across concurrent requests without relying on heavy database locks.',
+  },
+  {
+    title: 'Resilience',
+    text: 'I build applications that survive partial failures through graceful degradation. If an async broker or cache drops, rate limiters and queues fall back to synchronous or in-memory execution so the core flow keeps working instead of failing. I also build stateful JWT authentication with JTI blacklisting for immediate token revocation.',
+  },
+  {
+    title: 'Open source and applied AI (Hugging Face)',
+    text: 'I contributed a semantic matching engine to Hugging Face Spaces. I cut inference memory by 50% with a shared global SentenceTransformer instance, and built a multi-tier NLP pipeline (FlashText taxonomy, then KeyBERT, then BGE embeddings) to replace fragile regex parsers.',
+  },
+  {
+    title: 'Rigorous ML experimentation',
+    text: 'I treat ML as a science, not a script. I reached 0.75 MAP@3 on a constrained 2,000-row dataset by showing that zero-shot logit extraction outperforms fine-tuning, which overfit badly, and I deliberately rejected SMOTE for high-dimensional sparse matrices.',
+  },
+];
+
+export const aboutStack: { label: string; items: string }[] = [
+  { label: 'Backend and infra', items: 'Python, FastAPI, Flask, PostgreSQL, Redis, Celery, SQLAlchemy, Docker, AWS, Fly.io, GitHub Actions' },
+  { label: 'ML and AI', items: 'PyTorch, Hugging Face, Scikit-learn, LightGBM, Sentence-Transformers, WandB, TF-IDF' },
+  { label: 'Tools', items: 'Linux, Git, Jupyter, VS Code' },
+];
+
+export const aboutClosing =
+  'I am looking for SDE, backend, or ML-focused engineering roles at companies that value engineering rigor, system design, and production-ready code. If you are building systems that need to scale, handle concurrency, or deploy ML models reliably, let us connect.';

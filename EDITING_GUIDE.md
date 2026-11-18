@@ -19,7 +19,7 @@ If the site fails to build, the error names the file and line. The usual cause i
 
 | What you see on the site | File | What to edit |
 |---|---|---|
-| Hero line, 4 big numbers, About paragraphs | `src/data/personal.ts` | `pullQuote`, `stats`, `aboutParagraphs` |
+| Hero line, 4 big numbers, About paragraphs | `src/data/personal.ts` | `pullQuote`, `stats`, `aboutIntro`, `aboutSections`, `aboutStack`, `aboutClosing` |
 | Name, email, phone, links | `src/data/personal.ts` | `personalInfo` |
 | "Shipped" section | `src/data/projects.ts` | every project that has a `live:` link appears here automatically |
 | "Machine learning" section | `src/components/sections/Research.tsx` | the `slugs` list (repo names to feature) |
