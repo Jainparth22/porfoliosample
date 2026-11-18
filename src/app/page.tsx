@@ -1,26 +1,25 @@
 import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import Education from '@/components/sections/Education';
+import Shipped from '@/components/sections/Shipped';
+import Research from '@/components/sections/Research';
 import Experience from '@/components/sections/Experience';
-import Projects from '@/components/sections/Projects';
+import AllWork from '@/components/sections/AllWork';
 import Skills from '@/components/sections/Skills';
-import Certifications from '@/components/sections/Certifications';
-import Badges from '@/components/sections/Badges';
+import Credentials from '@/components/sections/Credentials';
+import About from '@/components/sections/About';
 import Contact from '@/components/sections/Contact';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <Hero />
-      <About />
-      <Education />
+      <Shipped />
+      <Research />
       <Experience />
-      <Projects />
+      <AllWork />
       <Skills />
-      <Certifications />
-      <Badges />
+      <Credentials />
+      <About />
       <Contact />
-    </div>
+    </>
   );
 }
-

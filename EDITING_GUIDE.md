@@ -19,17 +19,20 @@ If the site fails to build, the error names the file and line. The usual cause i
 
 | What you see on the site | File | What to edit |
 |---|---|---|
-| Name, email, phone, links, typing roles, hero summary, hero numbers, achievements | `src/data/personal.ts` | `personalInfo`, `achievements`, `stats` |
-| Degrees, IITM milestones, campus activities | `src/data/education.ts` | `degrees`, `iitmMilestones`, `campusActivities` |
-| Internship and open-source cards | `src/data/experience.ts` | `experiences` |
-| Project cards and filter tabs | `src/data/projects.ts` | `projects` |
-| Skill groups and pills | `src/data/skills.ts` | `skillCategories` |
-| Certificate cards and filter tabs | `src/data/certifications.ts` | `certifications` |
-| AWS/ServiceNow badges, GfG/LeetCode/HackerRank cards | `src/data/badges.ts` | `badges`, `codingProfiles` |
-| Tab title and link-preview text | `src/app/layout.tsx` | `metadata` |
+| Hero line, 4 big numbers, About paragraphs | `src/data/personal.ts` | `pullQuote`, `stats`, `aboutParagraphs` |
+| Name, email, phone, links | `src/data/personal.ts` | `personalInfo` |
+| "Shipped" section | `src/data/projects.ts` | every project that has a `live:` link appears here automatically |
+| "Machine learning" section | `src/components/sections/Research.tsx` | the `slugs` list (repo names to feature) |
+| "All work" index and its tabs | `src/data/projects.ts` | `projects`; tabs are in `AllWork.tsx` |
+| Experience | `src/data/experience.ts` | `experiences` |
+| Skills (plain text lines) | `src/data/skills.ts` | `skillCategories` |
+| Degrees, IITM progress | `src/data/education.ts` | `degrees`, `iitmMilestones` |
+| Certificates | `src/data/certifications.ts` | `certifications` |
+| Badges, coding profiles | `src/data/badges.ts` | `badges`, `codingProfiles` |
+| Tab title and link preview | `src/app/layout.tsx` | `metadata` |
 | Section order | `src/app/page.tsx` | the list of `<Section />` lines |
-| Menu links | `src/components/layout/Navbar.tsx` | `navLinks` |
-| About paragraph text | `src/components/sections/About.tsx` | the paragraphs (plain text) |
+| Menu links | `src/components/layout/Nav.tsx` | `links` |
+| Colors (paper, ink, accent) | `tailwind.config.ts` | `colors` |
 
 ## Add something
 Copy an existing block, paste it below, change the values. Keep the comma after the closing `}`.
@@ -50,7 +53,7 @@ Copy an existing block, paste it below, change the values. Keep the comma after 
   showcase: 'What a visitor should look at first.',
 },
 ```
-Cards in the list appear in the order written, so put the best first. The "Featured" tab is the default view.
+Cards in the list appear in the order written, so put the best first. A project with a `live:` link is promoted to the big "Shipped" section; keep that to your best three.
 
 **Certificate** (`certifications.ts`): `category` must be `'iitm'`, `'workshop'`, `'course'` or `'hackerrank'`.
 ```ts

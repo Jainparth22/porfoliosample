@@ -1,166 +1,53 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, ArrowDown, ExternalLink } from 'lucide-react';
-import { personalInfo, stats } from '@/data/personal';
-import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import { personalInfo, stats, pullQuote } from '@/data/personal';
+import { projects } from '@/data/projects';
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // Typewriter effect
-  useEffect(() => {
-    const currentRole = personalInfo.roles[roleIndex];
-    let timeout: NodeJS.Timeout;
-
-    if (!isDeleting && displayed.length < currentRole.length) {
-      timeout = setTimeout(() => setDisplayed(currentRole.slice(0, displayed.length + 1)), 70);
-    } else if (!isDeleting && displayed.length === currentRole.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 2000);
-    } else if (isDeleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
-    } else if (isDeleting && displayed.length === 0) {
-      setIsDeleting(false);
-      setRoleIndex((i) => (i + 1) % personalInfo.roles.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayed, isDeleting, roleIndex]);
-
-  const scrollToAbout = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
+  const live = projects.filter((p) => p.live);
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-zinc-950"
-    >
-      {/* Animated background grid */}
-      <div
-        className="absolute inset-0 bg-grid-pattern bg-grid opacity-30 pointer-events-none"
-        aria-hidden="true"
-      />
+    <section id="top" className="mx-auto max-w-6xl px-5 pt-16 md:pt-28 pb-20">
+      <p className="font-mono text-xs uppercase tracking-widest text-mute">
+        Backend and ML engineer / VIT Bhopal + IIT Madras / open to roles
+      </p>
 
+      <h1 className="mt-6 font-serif text-[clamp(3rem,9vw,7.5rem)] leading-[0.95] tracking-tight">
+        Parth Jain<span className="text-accent">.</span>
+      </h1>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-sm mb-8"
-        >
-          {personalInfo.openToWork ? 'Open to opportunities' : 'Building great things'}
-        </motion.div>
+      <p className="mt-8 max-w-3xl font-serif text-2xl md:text-4xl leading-snug">{pullQuote}</p>
 
-        {/* Name */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 tracking-tight"
-        >
-          {personalInfo.name.split(' ')[0]}{' '}
-          <span className="text-cyan-400">
-            {personalInfo.name.split(' ')[1]}
-          </span>
-        </motion.h1>
+      <p className="mt-6 max-w-2xl text-mute leading-relaxed">
+        I build services that stay correct under concurrency and keep running when dependencies fail,
+        and ML systems whose results I can defend. Below is proof, not a list of technologies.
+      </p>
 
-        {/* Typewriter role */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-10 flex items-center justify-center mb-6"
-        >
-          <span className="text-xl sm:text-2xl text-zinc-300 font-mono">
-            {displayed}
-            <span className="inline-block w-0.5 h-6 bg-cyan-400 ml-0.5 animate-blink" />
-          </span>
-        </motion.div>
+      <dl className="mt-14 grid grid-cols-2 md:grid-cols-4 border-t border-rule">
+        {stats.map((s) => (
+          <div key={s.label} className="py-6 pr-4 md:border-r border-rule last:border-r-0">
+            <dt className="font-serif text-5xl md:text-6xl tracking-tight">
+              {s.value}
+              <span className="text-2xl text-mute">{s.suffix}</span>
+            </dt>
+            <dd className="mt-2 text-sm text-mute leading-snug">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
 
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed mb-10"
-        >
-          {personalInfo.summary}
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-16"
-        >
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+        <span className="font-mono text-xs uppercase tracking-widest text-mute">Live now</span>
+        {live.map((p) => (
           <a
-            href={personalInfo.github}
+            key={p.title}
+            href={p.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 hover:border-zinc-600 transition-all font-medium"
+            className="underline decoration-rule hover:decoration-accent hover:text-accent"
           >
-            <Github className="w-4 h-4" />
-            GitHub
+            {p.title.split(':')[0].split('(')[0].trim()}
           </a>
-          <a
-            href={personalInfo.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 hover:border-zinc-600 transition-all font-medium"
-          >
-            <Linkedin className="w-4 h-4" />
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${personalInfo.email}`}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 text-zinc-950 hover:bg-cyan-400 transition-all font-semibold"
-          >
-            <Mail className="w-4 h-4" />
-            Get in Touch
-          </a>
-        </motion.div>
-
-        {/* Stats bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto"
-        >
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="flex flex-col items-center p-4 rounded-xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm"
-            >
-              <span className={`text-2xl font-bold font-mono ${stat.color}`}>
-                <AnimatedCounter target={stat.value} />
-                <span className="text-sm ml-0.5 text-zinc-500">{stat.suffix}</span>
-              </span>
-              <span className="text-xs text-zinc-500 mt-1 text-center">{stat.label}</span>
-            </div>
-          ))}
-        </motion.div>
+        ))}
+        <a href={personalInfo.github} className="underline decoration-rule hover:decoration-accent" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={personalInfo.linkedin} className="underline decoration-rule hover:decoration-accent" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
-
-      {/* Scroll hint */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-600 hover:text-zinc-400 transition-colors"
-      >
-        <span className="text-xs">scroll down</span>
-        <ArrowDown className="w-4 h-4 animate-bounce" />
-      </motion.button>
     </section>
   );
 }
-

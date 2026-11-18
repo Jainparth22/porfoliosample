@@ -1,65 +1,31 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
+import Nav from '@/components/layout/Nav';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-});
+const sans = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
+const serif = Fraunces({ subsets: ['latin'], variable: '--font-serif', display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'Parth Jain | Backend & ML Engineer Portfolio',
+  title: 'Parth Jain | Backend and ML engineer',
   description:
-    'Computer Science & Data Science student building backend systems, full-stack applications, and deployable ML/NLP pipelines. 950+ day coding streak, 200+ LeetCode problems, IIT Madras diplomas.',
-  keywords: [
-    'Parth Jain',
-    'Backend Engineer',
-    'Machine Learning',
-    'NLP',
-    'Distributed Systems',
-    'FastAPI',
-    'Flask',
-    'PyTorch',
-    'Portfolio',
-  ],
+    'Backend and ML engineer. Three live apps, a 0.75 Kaggle MAP@3 result, and a Hugging Face semantic matcher. B.Tech CSE (VIT Bhopal) and BS Data Science (IIT Madras).',
   authors: [{ name: 'Parth Jain', url: 'https://github.com/Jainparth22' }],
-  creator: 'Parth Jain',
   openGraph: {
-    title: 'Parth Jain | Portfolio',
-    description:
-      'Backend & ML Engineer | Dual Degree CS + Data Science | Hugging Face Open-Source Contributor',
-    url: 'https://jainparth22.github.io',
-    siteName: 'Parth Jain Portfolio',
-    locale: 'en_US',
+    title: 'Parth Jain | Backend and ML engineer',
+    description: 'I build for edge cases, race conditions and partial failures.',
     type: 'website',
-  },
-  icons: {
-    icon: '/favicon.ico',
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
-      <body className="min-h-screen bg-zinc-950 font-sans text-zinc-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-300">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+      <body className="font-sans bg-paper text-ink">
+        <Nav />
+        <main>{children}</main>
       </body>
     </html>
   );
 }
-
