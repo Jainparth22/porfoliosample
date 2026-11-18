@@ -112,7 +112,7 @@ export const codingProfiles: CodingProfile[] = [
     handle: 'jain22parth',
     color: 'text-green-400',
     border: 'border-green-400/20',
-    headline: '5',
+    headline: '5 star',
     headlineLabel: 'Python, Gold level',
     facts: ['495 Python points', 'SQL Advanced and Intermediate certified', 'Problem Solving certified'],
     url: 'https://www.hackerrank.com/profile/jain22parth',
