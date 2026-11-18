@@ -1,6 +1,9 @@
 import type { Config } from 'tailwindcss';
 
+const c = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
@@ -10,12 +13,16 @@ const config: Config = {
         mono: ['var(--font-mono)', 'monospace'],
       },
       colors: {
-        paper: '#f3efe6',
-        sheet: '#faf8f3',
-        ink: '#141414',
-        mute: '#6b665c',
-        rule: '#d6d0c2',
-        accent: '#c2410c',
+        paper: c('paper'),
+        sheet: c('sheet'),
+        ink: c('ink'),
+        mute: c('mute'),
+        rule: c('rule'),
+        accent: c('accent'),
+        inv: c('inv'),
+        invfg: c('invfg'),
+        invmute: c('invmute'),
+        invrule: c('invrule'),
       },
     },
   },

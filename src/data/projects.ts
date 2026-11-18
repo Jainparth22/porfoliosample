@@ -19,6 +19,14 @@ export interface Project {
   highlights?: string[];      // Specialty bullet points
   showcase?: string;          // What to look at in this project
   status?: 'production' | 'demo' | 'learning' | 'archived';
+  metrics?: { value: string; label: string }[];   // big numbers shown on the case study
+  flow?: string[];                                // short chain of steps shown as a diagram
+  flowNote?: string;                              // one line under the diagram
+  chartTitle?: string;                            // title of the score chart
+  chart?: { label: string; value: number; highlight?: boolean }[];
+  chartMin?: number;
+  chartMax?: number;
+  chartMark?: { label: string; value: number };  // vertical marker, e.g. a cutoff
 }
 
 export const projects: Project[] = [
@@ -28,6 +36,9 @@ export const projects: Project[] = [
     longDescription: "A real campus problem, not a tutorial CRUD app: students apply to placement drives, recruiters manage drives and candidates, admins oversee everything. Built end to end: schema, API, SPA, caching, async queue and deployment.",
     tech: ["Flask", "Vue 3", "SQLAlchemy", "PostgreSQL / SQLite", "Redis", "Celery", "JWT", "Hugging Face", "Fly.io / Railway"],
     github: "https://github.com/Jainparth22/PlacementPortalApp",
+    metrics: [{ value: "53", label: "REST endpoints, documented in api.yaml" }, { value: "12", label: "database tables" }, { value: "14", label: "single-page-app screens" }],
+    flow: ["Vue 3 SPA", "Flask API", "Redis cache", "Celery workers", "Postgres / SQLite"],
+    flowNote: "Every hop has a fallback: Redis to memory, Celery to a synchronous run, Postgres to SQLite.",
     live: "https://ppa-v5.fly.dev",
     category: ["featured", "backend"],
     featured: true,
@@ -46,6 +57,9 @@ export const projects: Project[] = [
     longDescription: "Patients book slots and submit symptoms, doctors record visits, admins manage schedules and leave. The system is designed to stay correct under simultaneous bookings and to keep working when the LLM, email, calendar or Redis is down.",
     tech: ["FastAPI", "SQLAlchemy 2.0", "Alembic", "PostgreSQL / SQLite", "Redis", "Celery + Beat", "Google Gemini", "Docker Compose", "HTMX / Jinja2", "pytest"],
     github: "https://github.com/Jainparth22/Healthcare-Appointment-Follow-up-Manager",
+    metrics: [{ value: "10 min", label: "slot hold before it expires" }, { value: "5", label: "email retries before dead-letter" }, { value: "0", label: "double-bookings in race tests" }],
+    flow: ["Patient picks slot", "Hold (compare-and-set)", "Idempotent confirm", "Outbox + Celery", "Email and Calendar"],
+    flowNote: "Gemini triage and summaries always have a deterministic fallback, so the flow never breaks.",
     live: "https://hcv-parth.up.railway.app/",
     category: ["featured", "backend"],
     featured: true,
@@ -64,6 +78,9 @@ export const projects: Project[] = [
     longDescription: "Replaces fragmented spreadsheets and bloated enterprise software with one app that gives real-time stock visibility and automatic reconciliation for sales, purchasing and manufacturing.",
     tech: ["Next.js 16", "TypeScript", "Prisma 6", "PostgreSQL (Neon)", "jose JWT", "Recharts", "Vercel"],
     github: "https://github.com/Jainparth22/Inventory-app",
+    metrics: [{ value: "3", label: "order pipelines: sales, purchase, manufacturing" }, { value: "4", label: "stages in a sales order" }, { value: "PWA", label: "installable, with Edge-verified auth" }],
+    flow: ["Quotation", "Packing", "Dispatch", "Stock deducted", "Completed"],
+    flowNote: "Stock is never edited by hand. It changes only when an order moves to a valid state.",
     live: "https://inventory-parth.vercel.app",
     category: ["featured", "backend"],
     featured: true,
@@ -82,6 +99,12 @@ export const projects: Project[] = [
     longDescription: "IITM Deep Learning & GenAI project: given a question and five options, return the three most likely answers in order. Documented across 16 approaches, 25+ notebooks and 10 W&B runs.",
     tech: ["PyTorch", "Hugging Face", "Qwen-7B/14B", "RoBERTa", "DeBERTa", "BiLSTM", "LightGBM", "XGBoost", "Weights & Biases", "Streamlit"],
     github: "https://github.com/Jainparth22/SmartMCQsolver",
+    metrics: [{ value: "0.75084", label: "Kaggle private MAP@3" }, { value: "2,000", label: "training rows" }, { value: "16", label: "approaches tried" }],
+    chartTitle: "Public leaderboard score along the way",
+    chart: [{ label: "Naive guess (A B C)", value: 0.27 }, { label: "DeBERTa, fine-tuned", value: 0.352 }, { label: "NLI DeBERTa, zero-shot", value: 0.494 }, { label: "Qwen-7B, zero-shot logits", value: 0.626 }, { label: "Qwen-7B, 5-shot logits", value: 0.705 }, { label: "Final ensemble", value: 0.751, highlight: true }],
+    chartMin: 0.0,
+    chartMax: 0.8,
+    chartMark: { label: "Cutoff 0.73", value: 0.73 },
     category: ["featured", "ml"],
     featured: true,
     status: "demo",
@@ -99,6 +122,8 @@ export const projects: Project[] = [
     longDescription: "Answers questions over annual reports and filings with evidence, and checks its own answers for hallucination before replying. Repo name is 'Langchain-Workshop'.",
     tech: ["LangGraph", "LangChain", "FAISS", "BM25", "Cross-encoder", "RAGAS", "Groq", "FastAPI", "SQLite"],
     github: "https://github.com/Jainparth22/Langchain-Workshop",
+    flow: ["Question", "Input guard", "BM25 + FAISS", "Rerank", "Researcher, Responder, Critic"],
+    flowNote: "An output guard checks for hallucination before the answer is returned.",
     category: ["featured", "ml"],
     featured: true,
     status: "demo",
@@ -226,6 +251,11 @@ export const projects: Project[] = [
     longDescription: "A course assignment turned into a five-milestone research process on 197,999 comments with a 20.9:1 class imbalance and a 'no transformers, no deep learning' constraint.",
     tech: ["Python", "scikit-learn", "TF-IDF", "LinearSVC", "Stacking", "XGBoost", "LightGBM"],
     github: "https://github.com/Jainparth22/MLtextclassificationpipeline",
+    metrics: [{ value: "0.826", label: "Macro F1" }, { value: "Top ~150", label: "of 600+ Kaggle teams" }, { value: "20.9 : 1", label: "class imbalance" }],
+    chartTitle: "Macro F1 by milestone",
+    chart: [{ label: "Logistic Regression baseline", value: 0.777 }, { label: "LinearSVC", value: 0.816 }, { label: "Stacking ensemble", value: 0.823 }, { label: "Final push", value: 0.826, highlight: true }],
+    chartMin: 0.74,
+    chartMax: 0.83,
     category: ["ml"],
     status: "demo",
     highlights: [
@@ -242,6 +272,7 @@ export const projects: Project[] = [
     longDescription: "A Rossmann-style Kaggle problem reframed as a logistics company: over-forecasting wastes perishables, under-forecasting causes stockouts. Adapts the winning approach of Gert Jacobusse.",
     tech: ["LightGBM", "XGBoost", "CatBoost", "FastAPI", "Pydantic", "GitHub Actions", "pandas"],
     github: "https://github.com/Jainparth22/Cerebal-ross-store-sales-problem",
+    metrics: [{ value: "970K", label: "training rows" }, { value: "1,115", label: "hubs forecast" }, { value: "60+", label: "engineered time features" }],
     category: ["ml"],
     status: "demo",
     highlights: [

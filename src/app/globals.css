@@ -2,19 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
-
-html { scroll-behavior: smooth; background: #f3efe6; }
-
-body {
-  background: #f3efe6;
-  color: #141414;
-  font-feature-settings: "ss01" 1, "cv11" 1;
-  -webkit-font-smoothing: antialiased;
+:root {
+  --paper: 243 239 230;
+  --sheet: 250 248 243;
+  --ink: 20 20 20;
+  --mute: 107 102 92;
+  --rule: 214 208 194;
+  --accent: 194 65 12;
+  --inv: 20 20 20;
+  --invfg: 243 239 230;
+  --invmute: 160 154 142;
+  --invrule: 62 60 55;
+  color-scheme: light;
 }
 
-::selection { background: #c2410c; color: #faf8f3; }
+.dark {
+  --paper: 15 15 14;
+  --sheet: 22 22 20;
+  --ink: 238 233 222;
+  --mute: 150 145 134;
+  --rule: 48 46 42;
+  --accent: 242 124 66;
+  --inv: 30 29 26;
+  --invfg: 238 233 222;
+  --invmute: 150 145 134;
+  --invrule: 64 62 56;
+  color-scheme: dark;
+}
 
-a { text-underline-offset: 3px; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
 
-.rule-top { border-top: 1px solid #d6d0c2; }
+body {
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: rgb(var(--accent));
+  color: #faf8f3;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+.rule-top {
+  border-top: 1px solid rgb(var(--rule));
+}
+
+/* animated dashes for the hero diagram */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.flow-line {
+  stroke-dasharray: 6 6;
+  animation: flow 1.2s linear infinite;
+}
+
+/* tech marquee */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line,
+  .marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
