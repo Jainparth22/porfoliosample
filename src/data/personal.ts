@@ -30,21 +30,21 @@ export const personalInfo = {
   summary: `Dual-degree student (B.Tech CSE at VIT Bhopal and BS Data Science at IIT Madras) building
   backend systems, full-stack applications and deployable ML/NLP pipelines. I work with Flask, FastAPI,
   Redis, Celery and PostgreSQL, run live apps on Fly.io, Railway and Vercel, ship semantic-search models on Hugging Face Spaces, and practise
-  data structures daily: a 969-day GeeksforGeeks streak and 212 LeetCode problems solved.`,
+  data structures daily: a 950+ day GeeksforGeeks streak and 200+ LeetCode problems solved.`,
 };
 
 export const achievements = [
   {
     icon: '🔥',
-    title: '969-Day Coding Streak',
+    title: '950+ Day Coding Streak',
     description: 'Daily problem solving on GeeksforGeeks, still running as of Nov 2026.',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
   {
     icon: '⚡',
-    title: '212 LeetCode Problems',
-    description: '57 easy, 107 medium and 48 hard; 100 Days Badge 2026.',
+    title: '200+ LeetCode Problems',
+    description: 'Easy, medium and hard problems; 100 Days Badge 2026.',
     color: 'text-yellow-400',
     border: 'border-yellow-400/20',
   },
@@ -79,8 +79,8 @@ export const achievements = [
 ];
 
 export const stats = [
-  { label: 'GfG Coding Streak', value: '969', suffix: ' days', color: 'text-orange-400' },
-  { label: 'LeetCode Solved', value: '212', suffix: '', color: 'text-yellow-400' },
+  { label: 'GfG Coding Streak', value: '950+', suffix: ' days', color: 'text-orange-400' },
+  { label: 'LeetCode Solved', value: '200+', suffix: '', color: 'text-yellow-400' },
   { label: 'Certificates', value: String(certifications.length), suffix: '', color: 'text-cyan-400' },
   { label: 'Badges', value: String(badges.length), suffix: '', color: 'text-violet-400' },
 ];

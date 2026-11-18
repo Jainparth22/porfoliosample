@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Parth Jain | Backend & ML Engineer Portfolio',
   description:
-    'Computer Science & Data Science student building backend systems, full-stack applications, and deployable ML/NLP pipelines. 969-day coding streak, 212 LeetCode problems, IIT Madras diplomas.',
+    'Computer Science & Data Science student building backend systems, full-stack applications, and deployable ML/NLP pipelines. 950+ day coding streak, 200+ LeetCode problems, IIT Madras diplomas.',
   keywords: [
     'Parth Jain',
     'Backend Engineer',

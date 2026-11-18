@@ -43,8 +43,8 @@ export default function About() {
             </p>
             <p className="text-zinc-400 leading-relaxed text-sm mt-3">
               My{' '}
-              <span className="text-orange-400 font-semibold">969-day GeeksforGeeks streak</span>{' '}
-              and 212 solved LeetCode problems reflect a daily habit of practising algorithms.
+              <span className="text-orange-400 font-semibold">950+ day GeeksforGeeks streak</span>{' '}
+              and 200+ solved LeetCode problems reflect a daily habit of practising algorithms.
             </p>
           </div>
 

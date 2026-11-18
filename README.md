@@ -158,7 +158,7 @@ Open `src/data/certifications.ts`:
 
 - New sections: **Education** (`education.ts`) and **Coding Profiles & Badges** (`badges.ts`).
 - Certifications now have category filter tabs and dates; the full list lives in `certifications.ts`.
-- Hero stats, achievements and about text use verified figures (969-day GfG streak, 212 LeetCode problems).
+- Hero stats, achievements and about text use verified figures (950+ day GfG streak, 200+ LeetCode problems, kept as round numbers on purpose).
 - Phone number added to About and Contact. CGPA and school marks are intentionally not shown.
 - Project entries for Placement Portal, Healthcare, InventoryPro, Text Classification, Vehicle Parking and ML Inference API were corrected to match the resumes. Other repos are unchanged and still need owner review (see the comment at the top of `projects.ts`).
-- Streak and LeetCode numbers are snapshots from 18 Nov 2026; update `badges.ts` and `personal.ts` when they change.
+
