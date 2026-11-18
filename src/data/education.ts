@@ -10,7 +10,6 @@ export interface Degree {
   location: string;
   period: string;
   mode: string;
-  icon: string;
   color: 'cyan' | 'violet';
   details: string;
 }
@@ -27,7 +26,6 @@ export const degrees: Degree[] = [
     location: 'Bhopal, Madhya Pradesh',
     period: '2023 – Expected Jun 2027',
     mode: 'Full-time, on campus',
-    icon: '🎓',
     color: 'cyan',
     details:
       'Core CS: DSA, DBMS, Operating Systems, Computer Architecture, Machine Learning, Deep Learning, Big Data Management.',
@@ -38,7 +36,6 @@ export const degrees: Degree[] = [
     location: 'Chennai, Tamil Nadu',
     period: 'May 2023 – Expected May 2027',
     mode: 'Part-time, online',
-    icon: '🏛️',
     color: 'violet',
     details:
       'Statistics, machine learning, programming and application development, with workshops on Hugging Face, ML in production and LangChain.',

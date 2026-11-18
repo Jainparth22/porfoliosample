@@ -22,8 +22,7 @@ export default function CertCard({ cert, index = 0 }: CertCardProps) {
       )}
     >
       <div className="flex items-start gap-3">
-        <span className="text-2xl mt-0.5 shrink-0">{cert.icon}</span>
-        <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0">
           <h3 className="text-sm font-semibold text-zinc-100 leading-snug">
             {cert.title}
           </h3>

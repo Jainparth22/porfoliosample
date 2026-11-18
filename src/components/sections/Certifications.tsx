@@ -57,7 +57,7 @@ export default function Certifications() {
           className="mt-16"
         >
           <h3 className="text-xl font-bold text-white mb-6 text-center">
-            🏆 Achievements & Milestones
+            Achievements
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {achievements.map((a, i) => (
@@ -69,7 +69,6 @@ export default function Certifications() {
                 transition={{ duration: 0.3, delay: i * 0.07 }}
                 className={`flex gap-4 p-5 rounded-xl border bg-zinc-900/60 hover:bg-zinc-900 transition-all ${a.border}`}
               >
-                <span className="text-2xl shrink-0">{a.icon}</span>
                 <div>
                   <h4 className={`text-sm font-semibold ${a.color}`}>{a.title}</h4>
                   <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{a.description}</p>

@@ -55,7 +55,7 @@ Cards in the list appear in the order written, so put the best first. The "Featu
 **Certificate** (`certifications.ts`): `category` must be `'iitm'`, `'workshop'`, `'course'` or `'hackerrank'`.
 ```ts
 { title: 'Course name', issuer: 'Issuer', platform: 'Platform', year: 'Dec 2026',
-  category: 'course', icon: '📘', color: 'text-emerald-400',
+  category: 'course', color: 'text-emerald-400',
   verifyUrl: 'https://...', skills: ['Skill 1', 'Skill 2'] },
 ```
 
@@ -63,7 +63,7 @@ Cards in the list appear in the order written, so put the best first. The "Featu
 
 **Experience** (`experience.ts`): copy one block. `color` is `'cyan'` or `'violet'`; the first item is the newest.
 
-**Skill** (`skills.ts`): add a string to the `skills: [...]` list of a group, or copy a whole group for a new category.
+**Skill** (`skills.ts`): add a string to the `skills: [...]` list of a group, or copy a whole group for a new category (title, color, bgColor, skills).
 
 **Typing roles** (`personal.ts`, `roles`): add or remove strings.
 
@@ -82,7 +82,7 @@ To hide a whole section, delete its line in `src/app/page.tsx` (and its menu lin
 - **Phone or email**: `personalInfo` in `personal.ts` (shown on About and Contact). To hide the phone, delete the `<a href={`tel:...`}>` blocks in `About.tsx` and `Contact.tsx`.
 - **Profile URLs**: `url:` inside `codingProfiles` in `badges.ts` (check the LeetCode and HackerRank ones).
 - **Colors**: classes like `text-cyan-400` and `border-violet-400/20` are Tailwind colors. Swap the color name (emerald, orange, sky, amber...).
-- **Emoji icons**: any emoji works in `icon:`.
+- **No emojis on purpose**: the site is kept free of emoji icons so it reads as hand-made. Keep new entries plain text.
 
 ## Search tips (VS Code: Ctrl+Shift+F)
 - `Deploy coming soon` / `Run locally`: label on projects without a live link.

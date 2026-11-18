@@ -185,7 +185,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-zinc-950 font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-glow-cyan text-sm"
+                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-cyan-500 text-zinc-950 font-semibold hover:bg-cyan-400 transition-all text-sm"
               >
                 {submitted ? (
                   <>

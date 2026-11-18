@@ -45,15 +45,6 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Glowing blobs */}
-      <div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
         {/* Badge */}
@@ -63,7 +54,6 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/5 text-cyan-400 text-sm mb-8"
         >
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
           {personalInfo.openToWork ? 'Open to opportunities' : 'Building great things'}
         </motion.div>
 
@@ -75,7 +65,7 @@ export default function Hero() {
           className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 tracking-tight"
         >
           {personalInfo.name.split(' ')[0]}{' '}
-          <span className="bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent">
+          <span className="text-cyan-400">
             {personalInfo.name.split(' ')[1]}
           </span>
         </motion.h1>
@@ -130,7 +120,7 @@ export default function Hero() {
           </a>
           <a
             href={`mailto:${personalInfo.email}`}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 text-zinc-950 hover:bg-cyan-400 transition-all font-semibold shadow-glow-cyan"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 text-zinc-950 hover:bg-cyan-400 transition-all font-semibold"
           >
             <Mail className="w-4 h-4" />
             Get in Touch

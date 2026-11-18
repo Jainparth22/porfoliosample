@@ -32,7 +32,7 @@ export default function Experience() {
                 {/* Timeline dot */}
                 <div className="hidden sm:flex flex-col items-center">
                   <div
-                    className={`w-12 h-12 rounded-xl border flex items-center justify-center text-xl shrink-0 z-10 ${
+                    className={`w-12 h-12 rounded-xl border flex items-center justify-center text-sm font-semibold text-zinc-200 shrink-0 z-10 ${
                       exp.color === 'cyan'
                         ? 'border-cyan-400/40 bg-cyan-400/10'
                         : 'border-violet-400/40 bg-violet-400/10'

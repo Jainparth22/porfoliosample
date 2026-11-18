@@ -30,8 +30,7 @@ export default function Education() {
               }`}
             >
               <div className="flex items-start gap-3">
-                <span className="text-3xl shrink-0">{edu.icon}</span>
-                <div className="min-w-0">
+                                <div className="min-w-0">
                   <h3 className="font-semibold text-white">{edu.institution}</h3>
                   <p
                     className={`text-sm font-medium mt-0.5 ${

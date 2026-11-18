@@ -27,7 +27,7 @@ export default function Badges() {
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <span className="text-xl">{p.icon}</span> {p.platform}
+                  {p.platform}
                 </h3>
                 <span className="text-xs text-zinc-500">{p.handle}</span>
               </div>
@@ -55,7 +55,7 @@ export default function Badges() {
         </div>
 
         {/* Badges */}
-        <h3 className="text-xl font-bold text-white mb-6 text-center">🏅 Badges</h3>
+        <h3 className="text-xl font-bold text-white mb-6 text-center">Badges</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {badges.map((b, i) => (
             <motion.div
@@ -66,7 +66,6 @@ export default function Badges() {
               transition={{ duration: 0.3, delay: i * 0.05 }}
               className={`flex flex-col gap-2 p-5 rounded-xl border bg-zinc-900/60 hover:bg-zinc-900 transition-all ${b.border}`}
             >
-              <span className="text-2xl">{b.icon}</span>
               <h4 className={`text-sm font-semibold leading-snug ${b.color}`}>{b.title}</h4>
               <p className="text-xs text-zinc-500">{b.issuer}</p>
               <p className="text-xs text-zinc-600">{b.date}</p>

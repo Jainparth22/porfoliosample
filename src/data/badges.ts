@@ -8,7 +8,6 @@ export interface Badge {
   title: string;
   issuer: string;
   date: string;       // e.g. 'Apr 2026'
-  icon: string;
   color: string;      // tailwind text color class
   border: string;     // tailwind border color class
   url?: string;       // public badge URL (add when available)
@@ -19,7 +18,6 @@ export const badges: Badge[] = [
     title: 'AWS Educate: Getting Started with Databases',
     issuer: 'Amazon Web Services Training and Certification',
     date: 'Apr 2026',
-    icon: '🗄️',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
@@ -27,7 +25,6 @@ export const badges: Badge[] = [
     title: 'AWS Educate: Getting Started with Networking',
     issuer: 'Amazon Web Services Training and Certification',
     date: 'Feb 2026',
-    icon: '🌐',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
@@ -35,7 +32,6 @@ export const badges: Badge[] = [
     title: 'AWS Educate: Getting Started with Serverless',
     issuer: 'Amazon Web Services Training and Certification',
     date: 'Feb 2026',
-    icon: '⚡',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
@@ -43,7 +39,6 @@ export const badges: Badge[] = [
     title: 'AWS Educate: Getting Started with Storage',
     issuer: 'Amazon Web Services Training and Certification',
     date: 'Feb 2026',
-    icon: '📦',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
@@ -51,7 +46,6 @@ export const badges: Badge[] = [
     title: 'ServiceNow Administration Fundamentals',
     issuer: 'ServiceNow University',
     date: 'May 2026',
-    icon: '🛠️',
     color: 'text-emerald-400',
     border: 'border-emerald-400/20',
   },
@@ -59,7 +53,6 @@ export const badges: Badge[] = [
     title: 'Academic Partnerships Participant',
     issuer: 'ServiceNow University',
     date: 'Oct 2026',
-    icon: '🤝',
     color: 'text-emerald-400',
     border: 'border-emerald-400/20',
   },
@@ -67,7 +60,6 @@ export const badges: Badge[] = [
     title: 'Python — 5 Star, Gold Level',
     issuer: 'HackerRank (495 points)',
     date: '2026',
-    icon: '🐍',
     color: 'text-yellow-400',
     border: 'border-yellow-400/20',
   },
@@ -75,7 +67,6 @@ export const badges: Badge[] = [
     title: 'LeetCode 100 Days Badge 2026',
     issuer: 'LeetCode',
     date: '2026',
-    icon: '🏅',
     color: 'text-amber-400',
     border: 'border-amber-400/20',
   },
@@ -84,7 +75,6 @@ export const badges: Badge[] = [
 export interface CodingProfile {
   platform: string;
   handle: string;
-  icon: string;
   color: string;
   border: string;
   headline: string;      // big number
@@ -97,7 +87,6 @@ export const codingProfiles: CodingProfile[] = [
   {
     platform: 'GeeksforGeeks',
     handle: 'Daily streak',
-    icon: '🔥',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
     headline: '950+',
@@ -107,7 +96,6 @@ export const codingProfiles: CodingProfile[] = [
   {
     platform: 'LeetCode',
     handle: 'jain22parth',
-    icon: '⚡',
     color: 'text-yellow-400',
     border: 'border-yellow-400/20',
     headline: '200+',
@@ -122,10 +110,9 @@ export const codingProfiles: CodingProfile[] = [
   {
     platform: 'HackerRank',
     handle: 'jain22parth',
-    icon: '🟩',
     color: 'text-green-400',
     border: 'border-green-400/20',
-    headline: '5★',
+    headline: '5',
     headlineLabel: 'Python, Gold level',
     facts: ['495 Python points', 'SQL Advanced and Intermediate certified', 'Problem Solving certified'],
     url: 'https://www.hackerrank.com/profile/jain22parth',

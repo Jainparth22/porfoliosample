@@ -9,12 +9,12 @@ import { projects, type ProjectCategory } from '@/data/projects';
 import { cn } from '@/lib/utils';
 
 const tabs: { label: string; value: 'all' | ProjectCategory }[] = [
-  { label: '✨ All', value: 'all' },
-  { label: '⭐ Featured', value: 'featured' },
-  { label: '🤖 ML / NLP', value: 'ml' },
-  { label: '🏗️ Backend', value: 'backend' },
-  { label: '⚡ Distributed', value: 'distributed' },
-  { label: '📚 Notes & Coursework', value: 'coursework' },
+  { label: 'All', value: 'all' },
+  { label: 'Featured', value: 'featured' },
+  { label: 'ML / NLP', value: 'ml' },
+  { label: 'Backend', value: 'backend' },
+  { label: 'Distributed systems', value: 'distributed' },
+  { label: 'Notes & coursework', value: 'coursework' },
 ];
 
 export default function Projects() {
@@ -98,7 +98,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-700 text-zinc-300 hover:text-white hover:border-cyan-400/50 hover:bg-cyan-400/5 transition-all text-sm font-medium"
           >
-            🐙 View all 36 repositories on GitHub →
+            View all 36 repositories on GitHub
           </a>
         </motion.div>
       </div>

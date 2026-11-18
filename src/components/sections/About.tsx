@@ -24,7 +24,7 @@ export default function About() {
         >
           <div className="p-6 rounded-2xl border border-zinc-800 bg-zinc-900/60">
             <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-              <span className="text-cyan-400">👋</span> Professional Summary
+              Professional Summary
             </h3>
             <p className="text-zinc-400 leading-relaxed text-sm">
               I&apos;m pursuing a B.Tech in Computer Science at{' '}
@@ -57,7 +57,7 @@ export default function About() {
               href={`mailto:${personalInfo.email}`}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 text-sm hover:text-cyan-400 hover:border-cyan-400/30 transition-colors"
             >
-              📧 {personalInfo.email}
+              {personalInfo.email}
             </a>
             <a
               href={`tel:${personalInfo.phone.replace(/-/g, '')}`}
@@ -71,7 +71,7 @@ export default function About() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-400 text-sm hover:text-cyan-400 hover:border-cyan-400/30 transition-colors"
             >
-              🐙 github.com/jainparth22
+              github.com/jainparth22
             </a>
           </div>
         </motion.div>

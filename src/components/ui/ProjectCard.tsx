@@ -19,11 +19,11 @@ const categoryColors: Record<string, string> = {
 };
 
 const categoryLabels: Record<string, string> = {
-  featured: '⭐ Featured',
-  ml: '🤖 ML/NLP',
-  backend: '🏗️ Backend',
-  distributed: '⚡ Distributed',
-  coursework: '📚 Learning',
+  featured: 'Featured',
+  ml: 'ML / NLP',
+  backend: 'Backend',
+  distributed: 'Distributed',
+  coursework: 'Notes',
 };
 
 const statusDot: Record<string, string> = {

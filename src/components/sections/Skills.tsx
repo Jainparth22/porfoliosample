@@ -27,8 +27,7 @@ export default function Skills() {
             >
               {/* Category header */}
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-2xl">{cat.icon}</span>
-                <h3 className={cn('font-semibold text-base', cat.color)}>{cat.title}</h3>
+                                <h3 className={cn('font-semibold text-base', cat.color)}>{cat.title}</h3>
               </div>
 
               {/* Skill badges */}

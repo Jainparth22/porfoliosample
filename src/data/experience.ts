@@ -9,7 +9,7 @@ export interface ExperienceItem {
   period: string;
   location: string;
   type: string;          // 'Internship' | 'Open Source' | 'Full-time' etc.
-  logo?: string;         // emoji fallback logo
+  logo?: string;         // short text mark
   color: string;         // accent color class
   bullets: string[];
   tech?: string[];
@@ -22,7 +22,7 @@ export const experiences: ExperienceItem[] = [
     period: '20 May 2026 – 31 Jul 2026',
     location: 'Bhopal, India',
     type: 'Internship',
-    logo: '🏛️',
+    logo: 'MP',
     color: 'cyan',
     bullets: [
       'Completed two internship tracks (AI/ML, and Advanced Software Engineering & Development), each with a certificate of completion, covering full-stack development, MVC architecture, REST APIs, relational database design, SQL and ER modelling.',
@@ -37,7 +37,7 @@ export const experiences: ExperienceItem[] = [
     period: '2025 – Present',
     location: 'Remote',
     type: 'Open Source',
-    logo: '🤗',
+    logo: 'HF',
     color: 'violet',
     bullets: [
       'Built and deployed a two-tier Resume Analyzer & Matcher on Hugging Face Spaces: exact O(N) taxonomy mapping with FlashText, plus semantic gap-filling with KeyBERT and BGE-small embeddings.',

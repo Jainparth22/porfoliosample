@@ -32,42 +32,36 @@ export const personalInfo = {
 
 export const achievements = [
   {
-    icon: '🔥',
     title: '950+ Day Coding Streak',
     description: 'Daily problem solving on GeeksforGeeks, still running as of Nov 2026.',
     color: 'text-orange-400',
     border: 'border-orange-400/20',
   },
   {
-    icon: '⚡',
     title: '200+ LeetCode Problems',
     description: 'Easy, medium and hard problems; 100 Days Badge 2026.',
     color: 'text-yellow-400',
     border: 'border-yellow-400/20',
   },
   {
-    icon: '📊',
     title: 'Kaggle MAP@3: 0.75084',
     description: 'Smart MCQ Solver finished 2.8% above the competition cutoff on the private leaderboard.',
     color: 'text-violet-400',
     border: 'border-violet-400/20',
   },
   {
-    icon: '🎓',
     title: 'Two IITM Diplomas',
     description: 'Diploma in Programming and Diploma in Data Science, plus two Advanced Certificates.',
     color: 'text-cyan-400',
     border: 'border-cyan-400/20',
   },
   {
-    icon: '🐍',
-    title: 'HackerRank Python 5★ Gold',
+    title: 'HackerRank Python 5 Gold',
     description: 'Gold level with 495 points, plus SQL (Advanced) certification.',
     color: 'text-green-400',
     border: 'border-green-400/20',
   },
   {
-    icon: '🥈',
     title: '2nd Rank — State Level NCSC',
     description: 'National Children\'s Science Congress, State Level medal.',
     color: 'text-slate-300',
