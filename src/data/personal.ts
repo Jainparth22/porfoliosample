@@ -11,7 +11,7 @@ export const personalInfo = {
   phone: '+91-9479735365',
   github: 'https://github.com/jainparth22',
   linkedin: 'https://linkedin.com/in/jainparth22',
-  portfolio: 'https://jainparth22.github.io',
+  portfolio: 'https://porfoliosample-zeta.vercel.app',
   location: 'India',
   openToWork: true,
 
