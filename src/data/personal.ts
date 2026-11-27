@@ -21,10 +21,10 @@ export const personalInfo = {
     'ML / NLP Engineer',
     'Full-Stack Developer',
     'Open-Source Contributor',
-    'CS + Data Science Student',
+    'CS Graduate, Data Science Student',
   ],
 
-  summary: `Dual-degree student (B.Tech CSE at VIT Bhopal and BS Data Science at IIT Madras) building
+  summary: `B.Tech CSE graduate of VIT Bhopal (provisional degree), also completing a BS in Data Science at IIT Madras, building
   backend systems, full-stack applications and deployable ML/NLP pipelines. I work with Flask, FastAPI,
   Redis, Celery and PostgreSQL, ship a resume analyzer on Hugging Face Spaces, and practise
   data structures daily: a 950+ day GeeksforGeeks streak and 200+ LeetCode problems solved.`,
@@ -87,7 +87,7 @@ export const pullQuote =
   'Most students build for the happy path. I build for edge cases, race conditions, and partial failures.';
 
 export const aboutIntro: string[] = [
-  'I am a final-year CS student (IIT Madras + VIT) bridging advanced Machine Learning with production-grade backend systems. I do not just write CRUD APIs; I engineer resilient, scalable architectures that behave correctly under real-world constraints.',
+  'I am a CS graduate (VIT Bhopal, provisional degree), also completing a BS in Data Science at IIT Madras, bridging advanced Machine Learning with production-grade backend systems. I do not just write CRUD APIs; I engineer resilient, scalable architectures that behave correctly under real-world constraints.',
 ];
 
 export const aboutSections: { title: string; text: string }[] = [
@@ -120,4 +120,4 @@ export const aboutStack: { label: string; items: string }[] = [
 ];
 
 export const aboutClosing =
-  'I am looking for SDE, backend, or ML-focused engineering roles at companies that value engineering rigor, system design, and production-ready code. If you are building systems that need to scale, handle concurrency, or deploy ML models reliably, let us connect.';
+  'I am available to join immediately and am looking for SDE, backend, or ML-focused engineering roles at companies that value engineering rigor, system design, and production-ready code. If you are building systems that need to scale, handle concurrency, or deploy ML models reliably, let us connect.';

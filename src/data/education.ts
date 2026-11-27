@@ -24,7 +24,7 @@ export const degrees: Degree[] = [
     institution: 'Vellore Institute of Technology, Bhopal',
     degree: 'B.Tech, Computer Science and Engineering',
     location: 'Bhopal, Madhya Pradesh',
-    period: '2023 – Expected Jun 2027',
+    period: '2023 onwards. Provisional degree in hand, final degree May 2027',
     mode: 'Full-time, on campus',
     color: 'cyan',
     details:
