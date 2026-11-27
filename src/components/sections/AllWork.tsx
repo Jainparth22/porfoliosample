@@ -40,7 +40,7 @@ export default function AllWork() {
       <SectionHead
         no="04"
         title="Everything else I have built"
-        note="The index from GitHub, 36 public repositories in total. Click a card to open the code."
+        note="The index from GitHub, 35 public repositories in total. Click a card to open the code."
       />
 
       <div className="flex flex-wrap gap-2 mb-10">

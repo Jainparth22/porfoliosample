@@ -30,7 +30,7 @@ Hero, tech strip, 01 Shipped (dark panel), 02 Machine learning, 03 Experience, 0
 | Hero diagram (Client, API, Redis, Celery, DB) | `src/components/ui/HeroDiagram.tsx` | the `<text>` labels |
 | Scrolling tech strip | `src/components/ui/Marquee.tsx` | the `items` list |
 | Name, email, phone, social links | `src/data/personal.ts` | `personalInfo` |
-| 01 Shipped | `src/data/projects.ts` | every project with a `live:` link appears here automatically |
+| 01 Shipped | `src/data/projects.ts` | the `slugs` list at the top of `components/sections/Shipped.tsx` picks the case studies by repository name |
 | 02 Machine learning | `src/components/sections/Research.tsx` | the `slugs` list (repo names to feature) |
 | 04 All work (project cards) and its filter buttons | `src/data/projects.ts`, buttons in `AllWork.tsx` | `projects` (card shows category, title, `description`, first 4 `tech`, Code and Live links); `tabs` and `labelFor` in `AllWork.tsx` |
 | 03 Experience | `src/data/experience.ts` | `experiences` |
@@ -67,7 +67,7 @@ Copy an existing block, paste it below, change the values. Keep the comma after 
   showcase: "What a visitor should look at first.",          // shown under "More detail"
 },
 ```
-Order in the list is the order shown, so put the best first. A project with a `live:` link is promoted to the big "Shipped" panel; keep that to your best three.
+Order in the list is the order shown, so put the best first. To promote a project to the big dark panel, add its repository name to `slugs` in `Shipped.tsx`.
 
 **Optional visual fields** (add any of these to a project to get richer case-study blocks):
 ```ts
@@ -112,7 +112,7 @@ Delete the whole `{ ... },` block, or comment it out to keep it for later:
 // { title: 'Old project', ... },
 ```
 To hide a whole section, delete its line in `src/app/page.tsx` and its link in `Nav.tsx`. The file can stay.
-To remove a demo link that is down, delete its `live:` line. The project then leaves the Shipped panel and the hero "Live now" row, so add `live:` back when it is up.
+To remove a demo link that is down, delete its `live:` line. The project then leaves the hero "Live now" row, so add `live:` back when it is up.
 
 ## Update something
 - **Round numbers**: GfG and LeetCode are deliberately round (950+ and 200+). Search the project for `950+` and `200+` to find every spot (`personal.ts`, `badges.ts`).
@@ -127,7 +127,7 @@ To remove a demo link that is down, delete its `live:` line. The project then le
 ## Search tips (VS Code: Ctrl+Shift+F)
 - `TODO` finds notes to yourself.
 - A repo name finds its project block.
-- `live:` lists every project that appears in Shipped.
+- `live:` lists every project that appears in the hero "Live now" row.
 
 ## Safe-edit rules
 1. `projects.ts` uses double quotes; other data files use single quotes. Inside a string, an apostrophe needs care: use double quotes around it, or write `\'`.
@@ -139,7 +139,7 @@ To remove a demo link that is down, delete its `live:` line. The project then le
 ## Things to keep honest
 - Only list certificates you hold a file for (the ML Specialization is intentionally just Supervised ML).
 - Keep MPOnline described as a training-focused internship.
-- Check every live link works before sharing the site (Placement Portal on Fly.io and Healthcare on Railway were not responding on 18 Nov 2026).
+- Check every live link works before sharing the site (on 27 Nov 2026 the Placement Portal and Healthcare demos were down, so their `live:` lines were removed).
 - Do not publish demo passwords or student IDs in READMEs.
 - After a big change, open the live site on your phone in both light and dark mode.
 

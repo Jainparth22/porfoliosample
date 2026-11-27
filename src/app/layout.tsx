@@ -10,7 +10,7 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', displ
 export const metadata: Metadata = {
   title: 'Parth Jain | Backend and ML engineer',
   description:
-    'Backend and ML engineer. Three live apps, a 0.75 Kaggle MAP@3 result, and a Hugging Face semantic matcher. B.Tech CSE (VIT Bhopal) and BS Data Science (IIT Madras).',
+    'Backend and ML engineer. Failure-tolerant backend systems, a 0.75 Kaggle MAP@3 result, and a live resume analyzer on Hugging Face. B.Tech CSE (VIT Bhopal) and BS Data Science (IIT Madras).',
   authors: [{ name: 'Parth Jain', url: 'https://github.com/Jainparth22' }],
   openGraph: {
     title: 'Parth Jain | Backend and ML engineer',

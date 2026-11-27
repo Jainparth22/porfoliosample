@@ -78,7 +78,7 @@ export const skillCategories: SkillCategory[] = [
     color: 'text-yellow-400',
     bgColor: 'bg-yellow-400/10 border-yellow-400/20 text-yellow-300',
     skills: [
-      'Git', 'Docker', 'Linux', 'GitHub Actions', 'Weights & Biases', 'Hugging Face Spaces',
+      'Git', 'Docker', 'Linux', 'GitHub Actions', 'pytest', 'Prometheus', 'Grafana', 'OpenTelemetry', 'Weights & Biases', 'Hugging Face Spaces',
       'Vercel', 'Railway', 'Fly.io', 'Render', 'AWS (Educate)', 'Supabase',
     ],
   },

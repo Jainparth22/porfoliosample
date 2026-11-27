@@ -26,7 +26,7 @@ export const personalInfo = {
 
   summary: `Dual-degree student (B.Tech CSE at VIT Bhopal and BS Data Science at IIT Madras) building
   backend systems, full-stack applications and deployable ML/NLP pipelines. I work with Flask, FastAPI,
-  Redis, Celery and PostgreSQL, run live apps on Fly.io, Railway and Vercel, ship semantic-search models on Hugging Face Spaces, and practise
+  Redis, Celery and PostgreSQL, ship a resume analyzer on Hugging Face Spaces, and practise
   data structures daily: a 950+ day GeeksforGeeks streak and 200+ LeetCode problems solved.`,
 };
 
@@ -74,7 +74,7 @@ export const stats = [
   { label: 'Kaggle MAP@3 (LLM logit scoring beat fine-tuning)', value: '0.75', suffix: '', color: 'text-violet-400' },
   { label: 'Double-bookings in concurrent race tests', value: '0', suffix: '', color: 'text-cyan-400' },
   { label: 'Less RAM on my Hugging Face matcher', value: '50%', suffix: '', color: 'text-emerald-400' },
-  { label: 'REST endpoints in my live Placement Portal', value: '53', suffix: '', color: 'text-orange-400' },
+  { label: 'Automated tests in my Placement Portal', value: '223', suffix: '', color: 'text-orange-400' },
 ];
 
 // ------------------------------------------------------------
