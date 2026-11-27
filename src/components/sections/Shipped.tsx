@@ -3,7 +3,7 @@ import CaseStudy from '@/components/ui/CaseStudy';
 import { projects } from '@/data/projects';
 
 // The big case studies, by repository name, in this order.
-const slugs = ['PlacementPortalApp', 'MayaCardio', 'Healthcare-Appointment-Follow-up-Manager', 'Inventory-app'];
+const slugs = ['PlacementPortalApp', 'Healthcare-Appointment-Follow-up-Manager', 'Inventory-app'];
 
 export default function Shipped() {
   const list = slugs
@@ -15,7 +15,7 @@ export default function Shipped() {
         <SectionHead
           no="01"
           title="Systems built to survive failure"
-          note="Each one is built around something that goes wrong: a dead cache, two people booking one slot, a device unplugged mid-recording."
+          note="Each one is built around something that goes wrong: a dead cache, two people booking one slot."
           inverse
         />
         {list.map((p, i) => (
